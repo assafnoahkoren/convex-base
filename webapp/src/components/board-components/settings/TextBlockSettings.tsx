@@ -2,6 +2,8 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { SettingsSectionHeader } from '@/components/ui/settings-section-header';
+import { Button } from '@/components/ui/button';
+import { AlignLeft, AlignCenter, AlignRight, AlignVerticalSpaceAround, AlignStartVertical, AlignEndVertical } from 'lucide-react';
 
 export interface TextBlockConfig {
   fontSize?: string;
@@ -79,37 +81,63 @@ export function TextBlockSettings({ config, onChange, fontSizeOptions }: TextBlo
       </div>
 
       <div>
-        <Label htmlFor="alignment">Horizontal Alignment</Label>
-        <Select
-          value={config.alignment || 'left'}
-          onValueChange={(value) => onChange('alignment', value)}
-        >
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="left">Start</SelectItem>
-            <SelectItem value="center">Center</SelectItem>
-            <SelectItem value="right">End</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div>
-        <Label htmlFor="verticalAlignment">Vertical Alignment</Label>
-        <Select
-          value={config.verticalAlignment || 'top'}
-          onValueChange={(value) => onChange('verticalAlignment', value)}
-        >
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="top">Top</SelectItem>
-            <SelectItem value="middle">Middle</SelectItem>
-            <SelectItem value="bottom">Bottom</SelectItem>
-          </SelectContent>
-        </Select>
+        <Label>Alignment</Label>
+        <div className="flex gap-1 mt-2">
+          <Button
+            type="button"
+            variant={config.alignment === 'left' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => onChange('alignment', 'left')}
+            className="flex-1"
+          >
+            <AlignLeft className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant={config.alignment === 'center' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => onChange('alignment', 'center')}
+            className="flex-1"
+          >
+            <AlignCenter className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant={config.alignment === 'right' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => onChange('alignment', 'right')}
+            className="flex-1"
+          >
+            <AlignRight className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant={config.verticalAlignment === 'top' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => onChange('verticalAlignment', 'top')}
+            className="flex-1"
+          >
+            <AlignStartVertical className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant={config.verticalAlignment === 'middle' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => onChange('verticalAlignment', 'middle')}
+            className="flex-1"
+          >
+            <AlignVerticalSpaceAround className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant={config.verticalAlignment === 'bottom' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => onChange('verticalAlignment', 'bottom')}
+            className="flex-1"
+          >
+            <AlignEndVertical className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
     </>
   );

@@ -224,6 +224,7 @@ export default function BoardEditor() {
             autoSize={true}
             verticalCompact={false}
             compactType={null}
+            preventCollision={true}
           >
           {components.map((component) => (
             <div
