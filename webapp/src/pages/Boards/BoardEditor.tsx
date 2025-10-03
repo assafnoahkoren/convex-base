@@ -255,10 +255,11 @@ export default function BoardEditor() {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // Calculate grid position
+    // Calculate grid position accounting for row gap
     const cellWidth = 1200 / gridConfig.columns;
+    const rowHeightWithGap = gridConfig.rowHeight + (gridConfig.rowGap || 0);
     const gridX = Math.floor(x / cellWidth);
-    const gridY = Math.floor(y / gridConfig.rowHeight);
+    const gridY = Math.floor(y / rowHeightWithGap);
 
     // Create component at the drop position
     handleAddComponent(componentType, { x: Math.min(gridX, gridConfig.columns - 4), y: gridY });
@@ -280,10 +281,11 @@ export default function BoardEditor() {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // Calculate grid position
+    // Calculate grid position accounting for row gap
     const cellWidth = 1200 / gridConfig.columns;
+    const rowHeightWithGap = gridConfig.rowHeight + (gridConfig.rowGap || 0);
     const gridX = Math.floor(x / cellWidth);
-    const gridY = Math.floor(y / gridConfig.rowHeight);
+    const gridY = Math.floor(y / rowHeightWithGap);
 
     // Get component size
     const component = getComponent(draggingType);
@@ -421,9 +423,9 @@ export default function BoardEditor() {
               className="absolute bg-blue-500/30 border-2 border-blue-500 rounded pointer-events-none z-50"
               style={{
                 left: `${(dragPreview.x * 1200) / gridConfig.columns}px`,
-                top: `${dragPreview.y * gridConfig.rowHeight}px`,
+                top: `${dragPreview.y * (gridConfig.rowHeight + (gridConfig.rowGap || 0))}px`,
                 width: `${(dragPreview.w * 1200) / gridConfig.columns}px`,
-                height: `${dragPreview.h * gridConfig.rowHeight}px`,
+                height: `${dragPreview.h * gridConfig.rowHeight + Math.max(0, dragPreview.h - 1) * (gridConfig.rowGap || 0)}px`,
               }}
             />
           )}
