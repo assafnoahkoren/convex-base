@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import BoardsList from './pages/Boards/BoardsList';
 import BoardViewer from './pages/Boards/BoardViewer';
 import BoardEditor from './pages/Boards/BoardEditor';
+import BoardHistory from './pages/Boards/BoardHistory';
 
 export function Router() {
   return (
@@ -47,6 +48,16 @@ export function Router() {
           element={
             <ProtectedRoute>
               <BoardEditor />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/boards/:boardId/history"
+          element={
+            <ProtectedRoute>
+              <Shell>
+                <BoardHistory />
+              </Shell>
             </ProtectedRoute>
           }
         />

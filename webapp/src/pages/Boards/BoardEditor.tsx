@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import GridLayout from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Save, Eye, X } from 'lucide-react';
+import { ArrowLeft, Save, Eye, X, History } from 'lucide-react';
 import { ComponentToolbar } from '@/components/Board/ComponentToolbar';
 import { ConfigPanel } from '@/components/Board/ConfigPanel';
 
@@ -206,6 +206,14 @@ export default function BoardEditor() {
           <Button onClick={handlePreview} variant="outline" className="w-full">
             <Eye className="mr-2 h-4 w-4" />
             {t('common.preview')}
+          </Button>
+          <Button
+            onClick={() => navigate(`/boards/${boardId}/history`)}
+            variant="outline"
+            className="w-full"
+          >
+            <History className="mr-2 h-4 w-4" />
+            {t('boards.history.viewHistory')}
           </Button>
         </div>
       </div>

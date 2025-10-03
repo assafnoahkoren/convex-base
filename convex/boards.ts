@@ -164,6 +164,16 @@ export const update = mutation({
       throw new Error("Permission denied: Only admins and owners can edit boards");
     }
 
+    // Create version snapshot before updating (if content is being changed)
+    if (args.content !== undefined) {
+      await ctx.db.insert("boardVersions", {
+        boardId: args.boardId,
+        content: board.content,
+        createdBy: userId,
+        createdAt: Date.now(),
+      });
+    }
+
     // Update board
     await ctx.db.patch(args.boardId, {
       ...(args.name !== undefined && { name: args.name }),

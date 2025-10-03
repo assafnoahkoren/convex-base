@@ -93,6 +93,20 @@ const he: Translations = {
   'boards.editor.config.fitCover': 'כיסוי',
   'boards.editor.config.fitContain': 'הכלה',
   'boards.editor.config.fitFill': 'מילוי',
+
+  'boards.history.title': 'היסטוריית גרסאות',
+  'boards.history.subtitle': 'צפה ושחזר גרסאות קודמות של {{boardName}}',
+  'boards.history.noVersions': 'אין גרסאות עדיין',
+  'boards.history.noVersionsSubtitle': 'גרסאות יופיעו כאן כאשר תשמור שינויים ללוח',
+  'boards.history.versionNumber': 'גרסה {{number}}',
+  'boards.history.preview': 'תצוגה מקדימה',
+  'boards.history.restore': 'שחזר',
+  'boards.history.restoring': 'משחזר...',
+  'boards.history.confirmRestore': 'האם אתה בטוח שברצונך לשחזר לגרסה זו? זה ייצור גרסה חדשה עם המצב הנוכחי.',
+  'boards.history.restoreError': 'שחזור הגרסה נכשל',
+  'boards.history.previewNotImplemented': 'תכונת התצוגה המקדימה בקרוב',
+  'boards.history.componentCount': '{{count}} רכיבים',
+  'boards.history.viewHistory': 'צפה בהיסטוריה',
 };
 
 export default he;

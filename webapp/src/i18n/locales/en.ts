@@ -91,6 +91,20 @@ const en = {
   'boards.editor.config.fitCover': 'Cover',
   'boards.editor.config.fitContain': 'Contain',
   'boards.editor.config.fitFill': 'Fill',
+
+  'boards.history.title': 'Version History',
+  'boards.history.subtitle': 'View and restore previous versions of {{boardName}}',
+  'boards.history.noVersions': 'No versions yet',
+  'boards.history.noVersionsSubtitle': 'Versions will appear here when you save changes to the board',
+  'boards.history.versionNumber': 'Version {{number}}',
+  'boards.history.preview': 'Preview',
+  'boards.history.restore': 'Restore',
+  'boards.history.restoring': 'Restoring...',
+  'boards.history.confirmRestore': 'Are you sure you want to restore to this version? This will create a new version with the current state.',
+  'boards.history.restoreError': 'Failed to restore version',
+  'boards.history.previewNotImplemented': 'Preview feature coming soon',
+  'boards.history.componentCount': '{{count}} components',
+  'boards.history.viewHistory': 'View History',
 } as const;
 
 export type TranslationKeys = keyof typeof en;
