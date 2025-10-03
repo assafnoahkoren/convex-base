@@ -31,10 +31,11 @@ export default function BoardViewer() {
   return (
     <div className="h-screen w-screen overflow-hidden" style={{ backgroundColor }}>
       <div
-        className="grid h-full w-full gap-2 p-4"
+        className="grid h-full w-full gap-x-0 p-4"
         style={{
           gridTemplateColumns: `repeat(${gridConfig.columns}, 1fr)`,
           gridTemplateRows: `repeat(${gridConfig.rows}, ${gridConfig.rowHeight}px)`,
+          rowGap: `${gridConfig.rowGap || 0}px`,
         }}
       >
         {components.map((component: any) => {
@@ -43,7 +44,7 @@ export default function BoardViewer() {
           return (
             <div
               key={id}
-              className="rounded overflow-hidden"
+              className="overflow-hidden"
               style={{
                 gridColumn: `${position.x + 1} / span ${position.w}`,
                 gridRow: `${position.y + 1} / span ${position.h}`,
