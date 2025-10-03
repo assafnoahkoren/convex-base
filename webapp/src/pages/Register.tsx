@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuthActions } from '@convex-dev/auth/react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useConvexAuth } from 'convex/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -8,10 +9,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 export default function Register() {
   const { signIn } = useAuthActions();
+  const { isAuthenticated } = useConvexAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +27,6 @@ export default function Register() {
 
     try {
       await signIn('password', { email, password, flow: 'signUp' });
-      navigate('/');
     } catch (err) {
       setError('Registration failed');
     }
