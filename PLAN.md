@@ -89,26 +89,26 @@ A SaaS platform for organizations to create and manage custom content boards for
 
 ## Implementation Plan - Step by Step
 
-### Step 1: Setup & Data Layer
+### Step 1: Setup & Data Layer ✅
 **Goal:** Complete backend foundation for boards
 
 - [x] Create board data model (with JSON content field)
 - [x] Create board versions data model
 - [x] Create displays data model
-- [ ] Create Convex queries:
-  - [ ] `boards.list` - Get all boards for current organization
-  - [ ] `boards.get` - Get single board by ID
-  - [ ] `boards.getForDisplay` - Get board assigned to a display
-- [ ] Create Convex mutations:
-  - [ ] `boards.create` - Create new board with default content
-  - [ ] `boards.update` - Update board content
-  - [ ] `boards.delete` - Delete board (admin only)
-  - [ ] `boards.duplicate` - Duplicate existing board
+- [x] Create Convex queries:
+  - [x] `boards.list` - Get all boards for current organization
+  - [x] `boards.get` - Get single board by ID
+  - [x] `boards.getForDisplay` - Get board assigned to a display
+- [x] Create Convex mutations:
+  - [x] `boards.create` - Create new board with default content
+  - [x] `boards.update` - Update board content
+  - [x] `boards.delete` - Delete board (admin only)
+  - [x] `boards.duplicate` - Duplicate existing board
 
 **Acceptance Criteria:**
-- Can create, read, update, delete boards via Convex dashboard
-- Boards are scoped to organizations
-- Only admins/owners can modify boards
+- ✅ Can create, read, update, delete boards via Convex dashboard
+- ✅ Boards are scoped to organizations
+- ✅ Only admins/owners can modify boards
 
 ---
 
