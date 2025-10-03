@@ -20,6 +20,10 @@ export function TextComponent({ config }: { config: TextConfig }) {
         padding: config.padding || '16px',
         borderRadius: config.borderRadius || '0px',
         fontWeight: config.fontWeight || 'normal',
+        marginTop: config.marginTop || '0px',
+        marginRight: config.marginRight || '0px',
+        marginBottom: config.marginBottom || '0px',
+        marginLeft: config.marginLeft || '0px',
       }}
     >
       <p className="w-full" style={{ fontWeight: config.fontWeight || 'normal' }}>

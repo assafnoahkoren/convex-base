@@ -22,6 +22,10 @@ export function ImageComponent({ config }: { config: ImageConfig }) {
           backgroundColor: config.backgroundColor || '#f3f4f6',
           padding: config.padding || '16px',
           borderRadius: config.borderRadius || '0px',
+          marginTop: config.marginTop || '0px',
+          marginRight: config.marginRight || '0px',
+          marginBottom: config.marginBottom || '0px',
+          marginLeft: config.marginLeft || '0px',
         }}
       >
         <ImageIcon className="h-16 w-16 mb-2" />
@@ -37,6 +41,10 @@ export function ImageComponent({ config }: { config: ImageConfig }) {
         backgroundColor: config.backgroundColor || 'transparent',
         padding: config.padding || '8px',
         borderRadius: config.borderRadius || '0px',
+        marginTop: config.marginTop || '0px',
+        marginRight: config.marginRight || '0px',
+        marginBottom: config.marginBottom || '0px',
+        marginLeft: config.marginLeft || '0px',
       }}
     >
       <img

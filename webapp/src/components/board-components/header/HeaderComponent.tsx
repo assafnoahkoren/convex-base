@@ -58,6 +58,10 @@ export function HeaderComponent({
         borderRadius: config.borderRadius || '0px',
         fontWeight: config.fontWeight || 'bold',
         direction: isRtl ? 'rtl' : 'ltr',
+        marginTop: config.marginTop || '0px',
+        marginRight: config.marginRight || '0px',
+        marginBottom: config.marginBottom || '0px',
+        marginLeft: config.marginLeft || '0px',
       }}
     >
       {isEditing ? (

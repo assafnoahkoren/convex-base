@@ -6,6 +6,10 @@ export interface BlockConfig {
   backgroundColor?: string;
   padding?: string;
   borderRadius?: string;
+  marginTop?: string;
+  marginRight?: string;
+  marginBottom?: string;
+  marginLeft?: string;
 }
 
 interface BlockSettingsProps {
@@ -57,6 +61,52 @@ export function BlockSettings({ config, onChange }: BlockSettingsProps) {
           onChange={(e) => onChange('borderRadius', e.target.value)}
           placeholder="e.g., 8px"
         />
+      </div>
+
+      <div>
+        <Label>Margin</Label>
+        <div className="grid grid-cols-2 gap-2 mt-2">
+          <div>
+            <Label htmlFor="marginTop" className="text-xs text-gray-500">Top</Label>
+            <Input
+              id="marginTop"
+              type="text"
+              value={config.marginTop || '0px'}
+              onChange={(e) => onChange('marginTop', e.target.value)}
+              placeholder="0px"
+            />
+          </div>
+          <div>
+            <Label htmlFor="marginRight" className="text-xs text-gray-500">Right</Label>
+            <Input
+              id="marginRight"
+              type="text"
+              value={config.marginRight || '0px'}
+              onChange={(e) => onChange('marginRight', e.target.value)}
+              placeholder="0px"
+            />
+          </div>
+          <div>
+            <Label htmlFor="marginBottom" className="text-xs text-gray-500">Bottom</Label>
+            <Input
+              id="marginBottom"
+              type="text"
+              value={config.marginBottom || '0px'}
+              onChange={(e) => onChange('marginBottom', e.target.value)}
+              placeholder="0px"
+            />
+          </div>
+          <div>
+            <Label htmlFor="marginLeft" className="text-xs text-gray-500">Left</Label>
+            <Input
+              id="marginLeft"
+              type="text"
+              value={config.marginLeft || '0px'}
+              onChange={(e) => onChange('marginLeft', e.target.value)}
+              placeholder="0px"
+            />
+          </div>
+        </div>
       </div>
     </>
   );
