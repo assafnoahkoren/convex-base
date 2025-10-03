@@ -9,7 +9,7 @@ import { ImageIcon } from 'lucide-react';
 function HeaderComponent({ config }: { config: any }) {
   return (
     <div
-      className="flex items-center justify-center h-full p-4"
+      className="h-full p-4"
       style={{
         fontSize: config.fontSize || '24px',
         color: config.color || '#000000',
@@ -24,7 +24,7 @@ function HeaderComponent({ config }: { config: any }) {
 function TextComponent({ config }: { config: any }) {
   return (
     <div
-      className="flex items-center h-full p-4"
+      className="h-full p-4"
       style={{
         fontSize: config.fontSize || '16px',
         color: config.color || '#000000',

@@ -11,11 +11,12 @@ import { ArrowLeft, Save, Eye, X, History, GripVertical, ImageIcon, Settings } f
 import { ComponentToolbar } from '@/components/Board/ComponentToolbar';
 import { ConfigPanel } from '@/components/Board/ConfigPanel';
 import { BoardSettings } from '@/components/Board/BoardSettings';
+import { QuickSettings } from '@/components/Board/QuickSettings';
 
 // Component renderers (same as viewer but editable)
 function HeaderComponent({ config }: { config: any }) {
   return (
-    <div className="flex items-center justify-center h-full p-4" style={{ fontSize: config.fontSize || '24px', color: config.color || '#000000', textAlign: config.alignment || 'left' }}>
+    <div className="h-full p-4" style={{ fontSize: config.fontSize || '24px', color: config.color || '#000000', textAlign: config.alignment || 'left' }}>
       <h1 className="font-bold">{config.text || 'Header'}</h1>
     </div>
   );
@@ -23,7 +24,7 @@ function HeaderComponent({ config }: { config: any }) {
 
 function TextComponent({ config }: { config: any }) {
   return (
-    <div className="flex items-center h-full p-4" style={{ fontSize: config.fontSize || '16px', color: config.color || '#000000', textAlign: config.alignment || 'left' }}>
+    <div className="h-full p-4" style={{ fontSize: config.fontSize || '16px', color: config.color || '#000000', textAlign: config.alignment || 'left' }}>
       <p>{config.content || 'Text'}</p>
     </div>
   );
@@ -207,46 +208,13 @@ export default function BoardEditor() {
             </Button>
           </div>
 
-          {/* Quick Grid Settings */}
-          <div className="pt-2 border-t">
-            <p className="text-xs text-gray-500 mb-2 px-2">Quick Settings</p>
-            <div className="space-y-1">
-              <div className="flex items-center justify-between px-2 py-1">
-                <span className="text-xs text-gray-600">Columns</span>
-                <div className="flex gap-1">
-                  <button
-                    onClick={() => setGridConfig({ ...gridConfig, columns: 12 })}
-                    className={`px-2 py-0.5 text-xs rounded ${gridConfig.columns === 12 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
-                  >
-                    12
-                  </button>
-                  <button
-                    onClick={() => setGridConfig({ ...gridConfig, columns: 24 })}
-                    className={`px-2 py-0.5 text-xs rounded ${gridConfig.columns === 24 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
-                  >
-                    24
-                  </button>
-                </div>
-              </div>
-              <div className="flex items-center justify-between px-2 py-1">
-                <span className="text-xs text-gray-600">Row Height</span>
-                <div className="flex gap-1">
-                  <button
-                    onClick={() => setGridConfig({ ...gridConfig, rowHeight: 50 })}
-                    className={`px-2 py-0.5 text-xs rounded ${gridConfig.rowHeight === 50 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
-                  >
-                    50
-                  </button>
-                  <button
-                    onClick={() => setGridConfig({ ...gridConfig, rowHeight: 100 })}
-                    className={`px-2 py-0.5 text-xs rounded ${gridConfig.rowHeight === 100 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
-                  >
-                    100
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* Quick Settings */}
+          <QuickSettings
+            gridConfig={gridConfig}
+            backgroundColor={backgroundColor}
+            onGridConfigChange={setGridConfig}
+            onBackgroundColorChange={setBackgroundColor}
+          />
         </div>
 
         <div className="mb-4">
