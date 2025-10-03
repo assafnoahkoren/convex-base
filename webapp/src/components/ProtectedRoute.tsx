@@ -1,12 +1,23 @@
 import { Navigate } from 'react-router-dom';
 import { useConvexAuth } from 'convex/react';
+import { useOnboarding } from '@/domains/onboarding/useOnboarding';
+import CreateOrganization from '@/domains/onboarding/CreateOrganization';
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, isLoading } = useConvexAuth();
+  const { isAuthenticated, isLoading: authLoading } = useConvexAuth();
+  const { needsOnboarding, isLoading: onboardingLoading } = useOnboarding();
 
-  if (isLoading) {
+  if (authLoading || onboardingLoading) {
     return <div>Loading...</div>;
   }
 
-  return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  if (needsOnboarding) {
+    return <CreateOrganization />;
+  }
+
+  return <>{children}</>;
 }
