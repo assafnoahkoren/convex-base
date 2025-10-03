@@ -43,7 +43,7 @@ export default function BoardViewer() {
           return (
             <div
               key={id}
-              className="border border-gray-200 rounded bg-white overflow-hidden"
+              className="rounded overflow-hidden"
               style={{
                 gridColumn: `${position.x + 1} / span ${position.w}`,
                 gridRow: `${position.y + 1} / span ${position.h}`,

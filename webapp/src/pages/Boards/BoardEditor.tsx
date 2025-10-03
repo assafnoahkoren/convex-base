@@ -228,8 +228,8 @@ export default function BoardEditor() {
           {components.map((component) => (
             <div
               key={component.id}
-              className={`border rounded bg-white overflow-hidden relative group ${
-                selectedComponentId === component.id ? 'border-blue-500 border-2' : 'border-gray-300 hover:border-blue-500'
+              className={`rounded overflow-hidden relative group ${
+                selectedComponentId === component.id ? 'border-blue-500 border-2' : 'hover:border hover:border-blue-500'
               }`}
               onClick={() => setSelectedComponentId(component.id)}
             >

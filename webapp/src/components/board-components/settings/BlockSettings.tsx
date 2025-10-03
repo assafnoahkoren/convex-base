@@ -24,14 +24,15 @@ export function BlockSettings({ config, onChange }: BlockSettingsProps) {
           <Input
             id="backgroundColor"
             type="color"
-            value={config.backgroundColor || '#ffffff'}
+            value={config.backgroundColor || 'transparent'}
             onChange={(e) => onChange('backgroundColor', e.target.value)}
             className="w-20 h-10"
           />
           <Input
-            value={config.backgroundColor || '#ffffff'}
+            value={config.backgroundColor || 'transparent'}
             onChange={(e) => onChange('backgroundColor', e.target.value)}
             className="flex-1"
+            placeholder="transparent"
           />
         </div>
       </div>
