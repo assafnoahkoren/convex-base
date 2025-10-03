@@ -244,6 +244,8 @@ export default function BoardEditor() {
           width={1200}
           onLayoutChange={handleLayoutChange}
           draggableHandle=".cursor-move"
+          margin={[0, 0]}
+          containerPadding={[0, 0]}
         >
           {components.map((component) => (
             <div
