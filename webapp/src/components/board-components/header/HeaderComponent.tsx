@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { HeaderConfig } from './HeaderSettings';
+import { useIsValueRtl } from '@/hooks/useIsValueRtl';
 
 const getVerticalAlignClass = (align: string) => {
   switch (align) {
@@ -18,6 +19,7 @@ export function HeaderComponent({
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(config.text || 'Header');
+  const isRtl = useIsValueRtl(config.text || 'Header');
 
   const handleClick = (e: React.MouseEvent) => {
     if (onConfigChange) {
@@ -55,6 +57,7 @@ export function HeaderComponent({
         padding: config.padding || '16px',
         borderRadius: config.borderRadius || '0px',
         fontWeight: config.fontWeight || 'bold',
+        direction: isRtl ? 'rtl' : 'ltr',
       }}
     >
       {isEditing ? (

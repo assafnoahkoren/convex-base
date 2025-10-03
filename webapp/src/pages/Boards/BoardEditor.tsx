@@ -422,6 +422,7 @@ export default function BoardEditor() {
             onDragStart={() => setIsDraggingMultiple(selectedComponentIds.size > 1)}
             onDragStop={() => setIsDraggingMultiple(false)}
             draggableHandle=".cursor-move"
+            resizeHandles={['se', 'sw']}
             margin={[0, 0]}
             containerPadding={[0, 0]}
             autoSize={true}
