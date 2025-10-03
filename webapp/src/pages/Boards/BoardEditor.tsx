@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import GridLayout from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Save, Eye, X, History, GripVertical, Settings } from 'lucide-react';
+import { ArrowLeft, Save, Eye, X, History, GripVertical, Settings, GripHorizontal } from 'lucide-react';
 import { ComponentToolbar } from '@/components/Board/ComponentToolbar';
 import { ConfigPanel } from '@/components/Board/ConfigPanel';
 import { BoardSettings } from '@/components/Board/BoardSettings';
@@ -235,8 +235,8 @@ export default function BoardEditor() {
               onClick={() => setSelectedComponentId(component.id)}
             >
               {/* Drag Handle */}
-              <div className="drag-handle cursor-move absolute top-0 left-0 right-0 h-6 bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10">
-                <GripVertical className="h-4 w-4 text-gray-400" />
+              <div className="drag-handle cursor-move absolute top-0 left-1/2 -translate-x-1/2 w-10 h-6 bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10 rounded-b-md">
+                <GripHorizontal className="h-4 w-4 text-gray-400" />
               </div>
               {/* Remove Button */}
               <Button
