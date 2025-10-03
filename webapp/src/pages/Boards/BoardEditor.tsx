@@ -26,12 +26,14 @@ export default function BoardEditor() {
   const [components, setComponents] = useState<any[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const [selectedComponentId, setSelectedComponentId] = useState<string | null>(null);
+  const [selectedComponentIds, setSelectedComponentIds] = useState<Set<string>>(new Set());
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [gridConfig, setGridConfig] = useState({ columns: 12, rows: 12, rowHeight: 100 });
   const [backgroundColor, setBackgroundColor] = useState('#ffffff');
   const [copiedStyle, setCopiedStyle] = useState<any>(null);
   const [dragPreview, setDragPreview] = useState<{ x: number; y: number; w: number; h: number } | null>(null);
   const [draggingType, setDraggingType] = useState<'header' | 'text' | 'image' | null>(null);
+  const [isDraggingMultiple, setIsDraggingMultiple] = useState(false);
 
   // Load board data into state
   useEffect(() => {
@@ -51,6 +53,37 @@ export default function BoardEditor() {
   }, [board]);
 
   const handleLayoutChange = (newLayout: GridLayout.Layout[]) => {
+    // If multiple blocks are selected, move them together
+    if (selectedComponentIds.size > 1) {
+      const movedItem = newLayout.find((item, i) => {
+        const oldItem = layout[i];
+        return oldItem && (item.x !== oldItem.x || item.y !== oldItem.y);
+      });
+
+      if (movedItem) {
+        const oldMovedItem = layout.find(item => item.i === movedItem.i);
+        if (oldMovedItem) {
+          const deltaX = movedItem.x - oldMovedItem.x;
+          const deltaY = movedItem.y - oldMovedItem.y;
+
+          // Move all selected items by the same delta
+          const updatedLayout = newLayout.map(item => {
+            if (selectedComponentIds.has(item.i) && item.i !== movedItem.i) {
+              return {
+                ...item,
+                x: item.x + deltaX,
+                y: item.y + deltaY,
+              };
+            }
+            return item;
+          });
+
+          setLayout(updatedLayout);
+          return;
+        }
+      }
+    }
+
     setLayout(newLayout);
   };
 
@@ -115,8 +148,18 @@ export default function BoardEditor() {
   };
 
   const handleRemoveComponent = (componentId: string) => {
-    setComponents(components.filter((c) => c.id !== componentId));
-    setLayout(layout.filter((l) => l.i !== componentId));
+    // If multiple are selected, delete all selected
+    if (selectedComponentIds.size > 0) {
+      const idsToRemove = selectedComponentIds.has(componentId)
+        ? selectedComponentIds
+        : new Set([componentId]);
+      setComponents(components.filter((c) => !idsToRemove.has(c.id)));
+      setLayout(layout.filter((l) => !idsToRemove.has(l.i)));
+      setSelectedComponentIds(new Set());
+    } else {
+      setComponents(components.filter((c) => c.id !== componentId));
+      setLayout(layout.filter((l) => l.i !== componentId));
+    }
     if (selectedComponentId === componentId) {
       setSelectedComponentId(null);
     }
@@ -145,39 +188,52 @@ export default function BoardEditor() {
   };
 
   const handleDuplicate = (componentId: string) => {
-    const component = components.find((c) => c.id === componentId);
-    const layoutItem = layout.find((l) => l.i === componentId);
-    if (!component || !layoutItem) return;
+    // If multiple are selected, duplicate all selected
+    const idsToDuplicate = selectedComponentIds.size > 0 && selectedComponentIds.has(componentId)
+      ? Array.from(selectedComponentIds)
+      : [componentId];
 
-    const newId = `${component.type}-${Date.now()}`;
-    const newComponent = {
-      ...component,
-      id: newId,
-    };
+    const newComponents: any[] = [];
+    const newLayoutItems: GridLayout.Layout[] = [];
 
-    setComponents([...components, newComponent]);
-    setLayout([
-      ...layout,
-      {
+    idsToDuplicate.forEach((id) => {
+      const component = components.find((c) => c.id === id);
+      const layoutItem = layout.find((l) => l.i === id);
+      if (!component || !layoutItem) return;
+
+      const newId = `${component.type}-${Date.now()}-${id}`;
+      const newComponent = {
+        ...component,
+        id: newId,
+      };
+
+      newComponents.push(newComponent);
+      newLayoutItems.push({
         i: newId,
         x: layoutItem.x,
         y: layoutItem.y + layoutItem.h,
         w: layoutItem.w,
         h: layoutItem.h
-      },
-    ]);
+      });
+    });
+
+    setComponents([...components, ...newComponents]);
+    setLayout([...layout, ...newLayoutItems]);
   };
 
   const handleCenter = (componentId: string) => {
-    const layoutItem = layout.find((l) => l.i === componentId);
-    if (!layoutItem) return;
+    // If multiple are selected, center all selected
+    const idsToCenter = selectedComponentIds.size > 0 && selectedComponentIds.has(componentId)
+      ? Array.from(selectedComponentIds)
+      : [componentId];
 
-    // Calculate centered x position
-    const centeredX = Math.floor((gridConfig.columns - layoutItem.w) / 2);
-
-    setLayout(layout.map((l) =>
-      l.i === componentId ? { ...l, x: centeredX } : l
-    ));
+    setLayout(layout.map((l) => {
+      if (idsToCenter.includes(l.i)) {
+        const centeredX = Math.floor((gridConfig.columns - l.w) / 2);
+        return { ...l, x: centeredX };
+      }
+      return l;
+    }));
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -363,6 +419,8 @@ export default function BoardEditor() {
             rowHeight={gridConfig.rowHeight}
             width={1200}
             onLayoutChange={handleLayoutChange}
+            onDragStart={() => setIsDraggingMultiple(selectedComponentIds.size > 1)}
+            onDragStop={() => setIsDraggingMultiple(false)}
             draggableHandle=".cursor-move"
             margin={[0, 0]}
             containerPadding={[0, 0]}
@@ -383,10 +441,32 @@ export default function BoardEditor() {
               >
                 <div
                   className={`h-full w-full rounded overflow-hidden relative group ${
-                    selectedComponentId === component.id ? 'border-blue-500 border-2' : 'hover:border hover:border-blue-500'
+                    selectedComponentId === component.id || selectedComponentIds.has(component.id)
+                      ? 'border-blue-500 border-2'
+                      : 'hover:border hover:border-blue-500'
                   }`}
-                  onClick={() => setSelectedComponentId(component.id)}
+                  onClick={(e) => {
+                    if (e.ctrlKey || e.metaKey) {
+                      // Multi-select with Ctrl/Cmd
+                      const newSelected = new Set(selectedComponentIds);
+                      if (newSelected.has(component.id)) {
+                        newSelected.delete(component.id);
+                      } else {
+                        newSelected.add(component.id);
+                      }
+                      setSelectedComponentIds(newSelected);
+                      setSelectedComponentId(null);
+                    } else {
+                      // Single select
+                      setSelectedComponentId(component.id);
+                      setSelectedComponentIds(new Set());
+                    }
+                  }}
                 >
+                  {/* Multi-drag overlay */}
+                  {isDraggingMultiple && selectedComponentIds.has(component.id) && (
+                    <div className="absolute inset-0 bg-blue-500/20 pointer-events-none z-[100]" />
+                  )}
                   {/* Drag Handle */}
                   <div className="cursor-move absolute top-0 left-1/2 -translate-x-1/2 w-10 h-6 bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10 rounded-b-md drag-handle">
                     <GripHorizontal className="h-4 w-4 text-gray-400" />
