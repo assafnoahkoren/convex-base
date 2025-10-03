@@ -168,6 +168,18 @@ export default function BoardEditor() {
     ]);
   };
 
+  const handleCenter = (componentId: string) => {
+    const layoutItem = layout.find((l) => l.i === componentId);
+    if (!layoutItem) return;
+
+    // Calculate centered x position
+    const centeredX = Math.floor((gridConfig.columns - layoutItem.w) / 2);
+
+    setLayout(layout.map((l) =>
+      l.i === componentId ? { ...l, x: centeredX } : l
+    ));
+  };
+
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setDragPreview(null);
@@ -366,6 +378,7 @@ export default function BoardEditor() {
                 onPasteStyle={() => handlePasteStyle(component.id)}
                 onDuplicate={() => handleDuplicate(component.id)}
                 onDelete={() => handleRemoveComponent(component.id)}
+                onCenter={() => handleCenter(component.id)}
                 hasCopiedStyle={!!copiedStyle}
               >
                 <div

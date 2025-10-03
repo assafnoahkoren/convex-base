@@ -1,4 +1,4 @@
-import { Copy, Clipboard, CopyPlus, Trash2 } from 'lucide-react';
+import { Copy, Clipboard, CopyPlus, Trash2, AlignCenterHorizontal } from 'lucide-react';
 import {
   ContextMenu,
   ContextMenuContent,
@@ -12,6 +12,7 @@ interface BlockContextMenuProps {
   onPasteStyle: () => void;
   onDuplicate: () => void;
   onDelete: () => void;
+  onCenter: () => void;
   hasCopiedStyle: boolean;
 }
 
@@ -21,6 +22,7 @@ export function BlockContextMenu({
   onPasteStyle,
   onDuplicate,
   onDelete,
+  onCenter,
   hasCopiedStyle,
 }: BlockContextMenuProps) {
   return (
@@ -40,6 +42,10 @@ export function BlockContextMenu({
         <ContextMenuItem onClick={onDuplicate}>
           <CopyPlus className="mr-2 h-4 w-4" />
           Duplicate
+        </ContextMenuItem>
+        <ContextMenuItem onClick={onCenter}>
+          <AlignCenterHorizontal className="mr-2 h-4 w-4" />
+          Center Horizontally
         </ContextMenuItem>
         <ContextMenuItem onClick={onDelete} className="text-red-600">
           <Trash2 className="mr-2 h-4 w-4" />
