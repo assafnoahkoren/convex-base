@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import GridLayout from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Save, Eye } from 'lucide-react';
+import { ArrowLeft, Save, Eye, X } from 'lucide-react';
 import { ComponentToolbar } from '@/components/Board/ComponentToolbar';
 
 // Component renderers (same as viewer but editable)
@@ -144,6 +144,11 @@ export default function BoardEditor() {
     ]);
   };
 
+  const handleRemoveComponent = (componentId: string) => {
+    setComponents(components.filter((c) => c.id !== componentId));
+    setLayout(layout.filter((l) => l.i !== componentId));
+  };
+
   if (board === undefined) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -204,8 +209,16 @@ export default function BoardEditor() {
           {components.map((component) => (
             <div
               key={component.id}
-              className="border border-gray-300 rounded bg-white overflow-hidden hover:border-blue-500"
+              className="border border-gray-300 rounded bg-white overflow-hidden hover:border-blue-500 relative group"
             >
+              <Button
+                variant="destructive"
+                size="icon"
+                className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6"
+                onClick={() => handleRemoveComponent(component.id)}
+              >
+                <X className="h-4 w-4" />
+              </Button>
               {component.type === 'header' && <HeaderComponent config={component.config} />}
               {component.type === 'text' && <TextComponent config={component.config} />}
               {component.type === 'image' && <ImageComponent config={component.config} />}
