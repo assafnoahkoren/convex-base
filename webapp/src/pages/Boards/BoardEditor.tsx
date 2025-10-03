@@ -7,9 +7,10 @@ import { useTranslation } from 'react-i18next';
 import GridLayout from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Save, Eye, X, History, GripVertical } from 'lucide-react';
+import { ArrowLeft, Save, Eye, X, History, GripVertical, ImageIcon, Settings } from 'lucide-react';
 import { ComponentToolbar } from '@/components/Board/ComponentToolbar';
 import { ConfigPanel } from '@/components/Board/ConfigPanel';
+import { BoardSettings } from '@/components/Board/BoardSettings';
 
 // Component renderers (same as viewer but editable)
 function HeaderComponent({ config }: { config: any }) {
@@ -35,8 +36,18 @@ function ImageComponent({ config }: { config: any }) {
     config.storageId ? { storageId: config.storageId } : 'skip'
   );
 
-  // Use uploaded image URL, fallback to external URL, then placeholder
-  const src = imageUrl || config.imageUrl || 'https://via.placeholder.com/300';
+  // Use uploaded image URL, fallback to external URL
+  const src = imageUrl || config.imageUrl;
+
+  // If no image, show placeholder
+  if (!src) {
+    return (
+      <div className="h-full w-full p-2 flex flex-col items-center justify-center bg-gray-100 text-gray-400">
+        <ImageIcon className="h-16 w-16 mb-2" />
+        <p className="text-sm">No Image</p>
+      </div>
+    );
+  }
 
   return (
     <div className="h-full w-full p-2">
@@ -63,6 +74,9 @@ export default function BoardEditor() {
   const [components, setComponents] = useState<any[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const [selectedComponentId, setSelectedComponentId] = useState<string | null>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [gridConfig, setGridConfig] = useState({ columns: 12, rows: 12, rowHeight: 100 });
+  const [backgroundColor, setBackgroundColor] = useState('#ffffff');
 
   // Load board data into state
   useEffect(() => {
@@ -76,6 +90,8 @@ export default function BoardEditor() {
       }));
       setLayout(gridLayout);
       setComponents(board.content.components);
+      setGridConfig(board.content.gridConfig);
+      setBackgroundColor(board.content.backgroundColor || '#ffffff');
     }
   }, [board]);
 
@@ -108,7 +124,8 @@ export default function BoardEditor() {
       await updateBoard({
         boardId: boardId as Id<'boards'>,
         content: {
-          gridConfig: board.content.gridConfig,
+          gridConfig,
+          backgroundColor,
           components: updatedComponents,
         },
       });
@@ -131,7 +148,7 @@ export default function BoardEditor() {
         ? { text: 'New Header', fontSize: '24px', color: '#000000', alignment: 'left' }
         : type === 'text'
         ? { content: 'New Text', fontSize: '16px', color: '#000000', alignment: 'left' }
-        : { imageUrl: 'https://via.placeholder.com/300', alt: 'Image', fit: 'cover' },
+        : { alt: 'Image', fit: 'cover' },
     };
 
     setComponents([...components, newComponent]);
@@ -179,10 +196,14 @@ export default function BoardEditor() {
     <div className="flex h-screen w-screen overflow-hidden">
       {/* Toolbar */}
       <div className="w-64 border-r bg-gray-50 p-4 flex flex-col">
-        <div className="mb-4">
+        <div className="mb-4 space-y-2">
           <Button variant="ghost" onClick={() => navigate('/boards')} className="w-full justify-start">
             <ArrowLeft className="mr-2 h-4 w-4" />
             {t('common.back')}
+          </Button>
+          <Button variant="ghost" onClick={() => setSettingsOpen(true)} className="w-full justify-start">
+            <Settings className="mr-2 h-4 w-4" />
+            Settings
           </Button>
         </div>
 
@@ -214,12 +235,12 @@ export default function BoardEditor() {
       </div>
 
       {/* Canvas */}
-      <div className="flex-1 overflow-auto bg-white p-4">
+      <div className="flex-1 overflow-auto p-4" style={{ backgroundColor }}>
         <GridLayout
           className="layout"
           layout={layout}
-          cols={board.content.gridConfig.columns}
-          rowHeight={board.content.gridConfig.rowHeight}
+          cols={gridConfig.columns}
+          rowHeight={gridConfig.rowHeight}
           width={1200}
           onLayoutChange={handleLayoutChange}
           draggableHandle=".cursor-move"
@@ -266,6 +287,16 @@ export default function BoardEditor() {
           boardId={boardId as Id<'boards'>}
         />
       )}
+
+      {/* Board Settings Dialog */}
+      <BoardSettings
+        open={settingsOpen}
+        onOpenChange={setSettingsOpen}
+        gridConfig={gridConfig}
+        backgroundColor={backgroundColor}
+        onGridConfigChange={setGridConfig}
+        onBackgroundColorChange={setBackgroundColor}
+      />
     </div>
   );
 }

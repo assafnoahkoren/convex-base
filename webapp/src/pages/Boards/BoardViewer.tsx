@@ -3,6 +3,7 @@ import { useQuery } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import type { Id } from '@convex/_generated/dataModel';
 import { useTranslation } from 'react-i18next';
+import { ImageIcon } from 'lucide-react';
 
 // Component renderers
 function HeaderComponent({ config }: { config: any }) {
@@ -42,8 +43,18 @@ function ImageComponent({ config }: { config: any }) {
     config.storageId ? { storageId: config.storageId } : 'skip'
   );
 
-  // Use uploaded image URL, fallback to external URL, then placeholder
-  const src = imageUrl || config.imageUrl || 'https://via.placeholder.com/300';
+  // Use uploaded image URL, fallback to external URL
+  const src = imageUrl || config.imageUrl;
+
+  // If no image, show placeholder
+  if (!src) {
+    return (
+      <div className="h-full w-full p-2 flex flex-col items-center justify-center bg-gray-100 text-gray-400">
+        <ImageIcon className="h-16 w-16 mb-2" />
+        <p className="text-sm">No Image</p>
+      </div>
+    );
+  }
 
   return (
     <div className="h-full w-full p-2">
@@ -80,10 +91,10 @@ export default function BoardViewer() {
     );
   }
 
-  const { gridConfig, components } = board.content;
+  const { gridConfig, components, backgroundColor = '#ffffff' } = board.content;
 
   return (
-    <div className="h-screen w-screen overflow-hidden bg-white">
+    <div className="h-screen w-screen overflow-hidden" style={{ backgroundColor }}>
       <div
         className="grid h-full w-full gap-2 p-4"
         style={{

@@ -115,6 +115,16 @@ const he: Translations = {
   'boards.history.previewNotImplemented': 'תכונת התצוגה המקדימה בקרוב',
   'boards.history.componentCount': '{{count}} רכיבים',
   'boards.history.viewHistory': 'צפה בהיסטוריה',
+
+  'boards.settings.title': 'הגדרות לוח',
+  'boards.settings.description': 'הגדר את פריסת הלוח והמראה שלו',
+  'boards.settings.backgroundColor': 'צבע רקע',
+  'boards.settings.columns': 'עמודות רשת',
+  'boards.settings.columnsHelp': 'מספר העמודות ברשת (1-24)',
+  'boards.settings.rows': 'שורות רשת',
+  'boards.settings.rowsHelp': 'מספר השורות ברשת (1-100)',
+  'boards.settings.rowHeight': 'גובה שורה',
+  'boards.settings.rowHeightHelp': 'גובה כל שורה בפיקסלים (10-500)',
 };
 
 export default he;

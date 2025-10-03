@@ -113,6 +113,16 @@ const en = {
   'boards.history.previewNotImplemented': 'Preview feature coming soon',
   'boards.history.componentCount': '{{count}} components',
   'boards.history.viewHistory': 'View History',
+
+  'boards.settings.title': 'Board Settings',
+  'boards.settings.description': 'Configure your board layout and appearance',
+  'boards.settings.backgroundColor': 'Background Color',
+  'boards.settings.columns': 'Grid Columns',
+  'boards.settings.columnsHelp': 'Number of columns in the grid (1-24)',
+  'boards.settings.rows': 'Grid Rows',
+  'boards.settings.rowsHelp': 'Number of rows in the grid (1-100)',
+  'boards.settings.rowHeight': 'Row Height',
+  'boards.settings.rowHeightHelp': 'Height of each row in pixels (10-500)',
 } as const;
 
 export type TranslationKeys = keyof typeof en;

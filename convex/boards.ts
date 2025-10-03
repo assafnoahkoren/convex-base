@@ -118,6 +118,7 @@ export const create = mutation({
           rows: 8,
           rowHeight: 100,
         },
+        backgroundColor: '#ffffff',
         components: [],
       },
       createdBy: userId,
