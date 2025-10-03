@@ -7,21 +7,14 @@ import { useTranslation } from 'react-i18next';
 import GridLayout from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Save, Eye, X, History } from 'lucide-react';
+import { ArrowLeft, Save, Eye, X, History, GripVertical } from 'lucide-react';
 import { ComponentToolbar } from '@/components/Board/ComponentToolbar';
 import { ConfigPanel } from '@/components/Board/ConfigPanel';
 
 // Component renderers (same as viewer but editable)
 function HeaderComponent({ config }: { config: any }) {
   return (
-    <div
-      className="flex items-center justify-center h-full p-4 cursor-move"
-      style={{
-        fontSize: config.fontSize || '24px',
-        color: config.color || '#000000',
-        textAlign: config.alignment || 'left',
-      }}
-    >
+    <div className="flex items-center justify-center h-full p-4" style={{ fontSize: config.fontSize || '24px', color: config.color || '#000000', textAlign: config.alignment || 'left' }}>
       <h1 className="font-bold">{config.text || 'Header'}</h1>
     </div>
   );
@@ -29,14 +22,7 @@ function HeaderComponent({ config }: { config: any }) {
 
 function TextComponent({ config }: { config: any }) {
   return (
-    <div
-      className="flex items-center h-full p-4 cursor-move"
-      style={{
-        fontSize: config.fontSize || '16px',
-        color: config.color || '#000000',
-        textAlign: config.alignment || 'left',
-      }}
-    >
+    <div className="flex items-center h-full p-4" style={{ fontSize: config.fontSize || '16px', color: config.color || '#000000', textAlign: config.alignment || 'left' }}>
       <p>{config.content || 'Text'}</p>
     </div>
   );
@@ -44,7 +30,7 @@ function TextComponent({ config }: { config: any }) {
 
 function ImageComponent({ config }: { config: any }) {
   return (
-    <div className="h-full w-full p-2 cursor-move">
+    <div className="h-full w-full p-2">
       <img
         src={config.imageUrl || 'https://via.placeholder.com/300'}
         alt={config.alt || 'Image'}
@@ -232,22 +218,28 @@ export default function BoardEditor() {
           {components.map((component) => (
             <div
               key={component.id}
-              className={`border rounded bg-white overflow-hidden relative group cursor-pointer ${
+              className={`border rounded bg-white overflow-hidden relative group ${
                 selectedComponentId === component.id ? 'border-blue-500 border-2' : 'border-gray-300 hover:border-blue-500'
               }`}
               onClick={() => setSelectedComponentId(component.id)}
             >
+              {/* Drag Handle */}
+              <div className="drag-handle cursor-move absolute top-0 left-0 right-0 h-6 bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10">
+                <GripVertical className="h-4 w-4 text-gray-400" />
+              </div>
+              {/* Remove Button */}
               <Button
                 variant="destructive"
                 size="icon"
-                className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6"
+                className="absolute top-1 right-1 z-20 opacity-0 group-hover:opacity-100 transition-opacity h-5 w-5"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleRemoveComponent(component.id);
                 }}
               >
-                <X className="h-4 w-4" />
+                <X className="h-3 w-3" />
               </Button>
+              {/* Component Content */}
               {component.type === 'header' && <HeaderComponent config={component.config} />}
               {component.type === 'text' && <TextComponent config={component.config} />}
               {component.type === 'image' && <ImageComponent config={component.config} />}
