@@ -11,6 +11,7 @@ const he: Translations = {
   'common.preview': 'תצוגה מקדימה',
   'common.back': 'חזור',
   'common.close': 'סגור',
+  'common.saving': 'שומר...',
 
   'auth.login.title': 'התחברות',
   'auth.login.description': 'הזן את פרטי ההתחברות שלך',
@@ -72,6 +73,11 @@ const he: Translations = {
   'boards.create.cancelButton': 'ביטול',
   'boards.create.creating': 'יוצר...',
   'boards.create.error': 'יצירת הלוח נכשלה',
+
+  'boards.editor.components': 'רכיבים',
+  'boards.editor.addHeader': 'הוסף כותרת',
+  'boards.editor.addText': 'הוסף טקסט',
+  'boards.editor.addImage': 'הוסף תמונה',
 };
 
 export default he;

@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import BoardsList from './pages/Boards/BoardsList';
 import BoardViewer from './pages/Boards/BoardViewer';
+import BoardEditor from './pages/Boards/BoardEditor';
 
 export function Router() {
   return (
@@ -38,6 +39,14 @@ export function Router() {
           element={
             <ProtectedRoute>
               <BoardViewer />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/boards/:boardId/edit"
+          element={
+            <ProtectedRoute>
+              <BoardEditor />
             </ProtectedRoute>
           }
         />

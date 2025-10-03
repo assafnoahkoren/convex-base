@@ -9,6 +9,7 @@ const en = {
   'common.preview': 'Preview',
   'common.back': 'Back',
   'common.close': 'Close',
+  'common.saving': 'Saving...',
 
   'auth.login.title': 'Login',
   'auth.login.description': 'Enter your credentials to access your account',
@@ -70,6 +71,11 @@ const en = {
   'boards.create.cancelButton': 'Cancel',
   'boards.create.creating': 'Creating...',
   'boards.create.error': 'Failed to create board',
+
+  'boards.editor.components': 'Components',
+  'boards.editor.addHeader': 'Add Header',
+  'boards.editor.addText': 'Add Text',
+  'boards.editor.addImage': 'Add Image',
 } as const;
 
 export type TranslationKeys = keyof typeof en;
