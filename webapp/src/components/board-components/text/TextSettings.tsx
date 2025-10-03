@@ -1,11 +1,15 @@
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import type { SettingsProps } from '../types';
-import { BlockSettings } from '../settings/BlockSettings';
-import { TextBlockSettings } from '../settings/TextBlockSettings';
+import { BlockSettings, type BlockConfig } from '../settings/BlockSettings';
+import { TextBlockSettings, type TextBlockConfig } from '../settings/TextBlockSettings';
 import { SettingsSectionHeader } from '@/components/ui/settings-section-header';
 
-export function TextSettings({ config, onChange }: SettingsProps) {
+export interface TextConfig extends TextBlockConfig, BlockConfig {
+  content?: string;
+}
+
+export function TextSettings({ config, onChange }: SettingsProps<TextConfig>) {
   const handleChange = (field: string, value: string) => {
     onChange({ ...config, [field]: value });
   };

@@ -1,9 +1,9 @@
 import { useQuery } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import { ImageIcon } from 'lucide-react';
-import type { BoardComponentConfig } from '../types';
+import type { ImageConfig } from './ImageSettings';
 
-export function ImageComponent({ config }: { config: BoardComponentConfig }) {
+export function ImageComponent({ config }: { config: ImageConfig }) {
   // If storageId exists, fetch the authorized URL
   const imageUrl = useQuery(
     api.files.getUrl,

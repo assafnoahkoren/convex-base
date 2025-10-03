@@ -4,19 +4,19 @@ export interface BoardComponentConfig {
   [key: string]: any;
 }
 
-export interface SettingsProps {
-  config: BoardComponentConfig;
-  onChange: (config: BoardComponentConfig) => void;
+export interface SettingsProps<T extends BoardComponentConfig = BoardComponentConfig> {
+  config: T;
+  onChange: (config: T) => void;
   boardId?: Id<'boards'>;
 }
 
-export interface BoardComponent {
+export interface BoardComponent<T extends BoardComponentConfig = BoardComponentConfig> {
   type: string;
   displayName: string;
   icon?: React.ComponentType<{ className?: string }>;
-  render: (config: BoardComponentConfig) => JSX.Element;
-  settings: (props: SettingsProps) => JSX.Element;
-  defaultConfig: BoardComponentConfig;
+  render: (config: T) => JSX.Element;
+  settings: (props: SettingsProps<T>) => JSX.Element;
+  defaultConfig: T;
 }
 
 export interface ComponentPosition {

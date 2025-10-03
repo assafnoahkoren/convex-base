@@ -6,9 +6,9 @@ import { SettingsSectionHeader } from '@/components/ui/settings-section-header';
 export interface TextBlockConfig {
   fontSize?: string;
   color?: string;
-  alignment?: string;
-  verticalAlignment?: string;
-  fontWeight?: string;
+  alignment?: React.CSSProperties['textAlign'];
+  verticalAlignment?: 'top' | 'middle' | 'bottom';
+  fontWeight?: 'normal' | 'bold' | 'lighter';
 }
 
 interface TextBlockSettingsProps {

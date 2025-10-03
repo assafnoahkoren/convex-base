@@ -1,9 +1,9 @@
 import { ImageIcon } from 'lucide-react';
 import type { BoardComponent } from '../types';
 import { ImageComponent } from './ImageComponent';
-import { ImageSettings } from './ImageSettings';
+import { ImageSettings, type ImageConfig } from './ImageSettings';
 
-export const imageComponent: BoardComponent = {
+export const imageComponent: BoardComponent<ImageConfig> = {
   type: 'image',
   displayName: 'Image',
   icon: ImageIcon,

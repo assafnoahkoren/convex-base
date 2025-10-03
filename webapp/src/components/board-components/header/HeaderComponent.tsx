@@ -1,4 +1,4 @@
-import type { BoardComponentConfig } from '../types';
+import type { HeaderConfig } from './HeaderSettings';
 
 const getVerticalAlignClass = (align: string) => {
   switch (align) {
@@ -8,7 +8,7 @@ const getVerticalAlignClass = (align: string) => {
   }
 };
 
-export function HeaderComponent({ config }: { config: BoardComponentConfig }) {
+export function HeaderComponent({ config }: { config: HeaderConfig }) {
   return (
     <div
       className={`h-full ${getVerticalAlignClass(config.verticalAlignment || 'top')}`}

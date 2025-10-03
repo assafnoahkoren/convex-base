@@ -1,9 +1,9 @@
 import { Type } from 'lucide-react';
 import type { BoardComponent } from '../types';
 import { HeaderComponent } from './HeaderComponent';
-import { HeaderSettings } from './HeaderSettings';
+import { HeaderSettings, type HeaderConfig } from './HeaderSettings';
 
-export const headerComponent: BoardComponent = {
+export const headerComponent: BoardComponent<HeaderConfig> = {
   type: 'header',
   displayName: 'Header',
   icon: Type,

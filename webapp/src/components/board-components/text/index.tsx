@@ -1,9 +1,9 @@
 import { AlignLeft } from 'lucide-react';
 import type { BoardComponent } from '../types';
 import { TextComponent } from './TextComponent';
-import { TextSettings } from './TextSettings';
+import { TextSettings, type TextConfig } from './TextSettings';
 
-export const textComponent: BoardComponent = {
+export const textComponent: BoardComponent<TextConfig> = {
   type: 'text',
   displayName: 'Text',
   icon: AlignLeft,

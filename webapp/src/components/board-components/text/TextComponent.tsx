@@ -1,4 +1,4 @@
-import type { BoardComponentConfig } from '../types';
+import type { TextConfig } from './TextSettings';
 
 const getVerticalAlignClass = (align: string) => {
   switch (align) {
@@ -8,14 +8,14 @@ const getVerticalAlignClass = (align: string) => {
   }
 };
 
-export function TextComponent({ config }: { config: BoardComponentConfig }) {
+export function TextComponent({ config }: { config: TextConfig }) {
   return (
     <div
       className={`h-full ${getVerticalAlignClass(config.verticalAlignment || 'top')}`}
       style={{
         fontSize: config.fontSize || '16px',
         color: config.color || '#000000',
-        textAlign: config.alignment || 'left',
+        textAlign: (config.alignment || 'left') as React.CSSProperties['textAlign'],
         backgroundColor: config.backgroundColor || 'transparent',
         padding: config.padding || '16px',
         borderRadius: config.borderRadius || '0px',

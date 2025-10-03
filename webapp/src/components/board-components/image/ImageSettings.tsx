@@ -8,10 +8,18 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Upload, Loader2 } from 'lucide-react';
 import type { SettingsProps } from '../types';
-import { BlockSettings } from '../settings/BlockSettings';
+import { BlockSettings, type BlockConfig } from '../settings/BlockSettings';
 import { SettingsSectionHeader } from '@/components/ui/settings-section-header';
+import type { Id } from '@convex/_generated/dataModel';
 
-export function ImageSettings({ config, onChange, boardId }: SettingsProps) {
+export interface ImageConfig extends BlockConfig {
+  imageUrl?: string;
+  storageId?: Id<'_storage'>;
+  alt?: string;
+  fit?: 'cover' | 'contain' | 'fill';
+}
+
+export function ImageSettings({ config, onChange, boardId }: SettingsProps<ImageConfig>) {
   const { t } = useTranslation();
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
