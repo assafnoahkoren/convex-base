@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuthActions } from '@convex-dev/auth/react';
 import { useNavigate, Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 export default function Login() {
   const { signIn } = useAuthActions();
@@ -46,9 +47,9 @@ export default function Login() {
           />
         </div>
         {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
-        <button type="submit" style={{ width: '100%', padding: '10px' }}>
+        <Button type="submit" className="w-full">
           Login
-        </button>
+        </Button>
       </form>
       <p style={{ marginTop: '15px', textAlign: 'center' }}>
         Don't have an account? <Link to="/register">Register</Link>
