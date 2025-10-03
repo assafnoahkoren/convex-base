@@ -20,4 +20,8 @@ export const headerComponent: BoardComponent<HeaderConfig> = {
     padding: '16px',
     borderRadius: '0px',
   },
+  defaultSize: {
+    w: 6,
+    h: 1,
+  },
 };

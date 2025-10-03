@@ -20,4 +20,8 @@ export const textComponent: BoardComponent<TextConfig> = {
     padding: '16px',
     borderRadius: '0px',
   },
+  defaultSize: {
+    w: 4,
+    h: 2,
+  },
 };

@@ -17,6 +17,10 @@ export interface BoardComponent<T extends BoardComponentConfig = BoardComponentC
   render: (config: T) => JSX.Element;
   settings: (props: SettingsProps<T>) => JSX.Element;
   defaultConfig: T;
+  defaultSize: {
+    w: number;
+    h: number;
+  };
 }
 
 export interface ComponentPosition {

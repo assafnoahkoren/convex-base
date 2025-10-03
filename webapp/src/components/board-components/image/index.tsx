@@ -17,4 +17,8 @@ export const imageComponent: BoardComponent<ImageConfig> = {
     padding: '8px',
     borderRadius: '0px',
   },
+  defaultSize: {
+    w: 3,
+    h: 3,
+  },
 };

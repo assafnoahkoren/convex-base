@@ -30,6 +30,8 @@ export default function BoardEditor() {
   const [gridConfig, setGridConfig] = useState({ columns: 12, rows: 12, rowHeight: 100 });
   const [backgroundColor, setBackgroundColor] = useState('#ffffff');
   const [copiedStyle, setCopiedStyle] = useState<any>(null);
+  const [dragPreview, setDragPreview] = useState<{ x: number; y: number; w: number; h: number } | null>(null);
+  const [draggingType, setDraggingType] = useState<'header' | 'text' | 'image' | null>(null);
 
   // Load board data into state
   useEffect(() => {
@@ -91,22 +93,24 @@ export default function BoardEditor() {
     window.open(`/boards/${boardId}/view`, '_blank');
   };
 
-  const handleAddComponent = (type: 'header' | 'text' | 'image') => {
+  const handleAddComponent = (type: 'header' | 'text' | 'image', position?: { x: number; y: number }) => {
     const newId = `${type}-${Date.now()}`;
     const component = getComponent(type);
     if (!component) return;
 
+    const { w, h } = component.defaultSize;
+
     const newComponent = {
       id: newId,
       type,
-      position: { x: 0, y: 0, w: 4, h: 2 },
+      position: { x: position?.x ?? 0, y: position?.y ?? 0, w, h },
       config: component.defaultConfig,
     };
 
     setComponents([...components, newComponent]);
     setLayout([
       ...layout,
-      { i: newId, x: 0, y: Infinity, w: 4, h: 2 },
+      { i: newId, x: position?.x ?? 0, y: position?.y ?? Infinity, w, h },
     ]);
   };
 
@@ -164,6 +168,73 @@ export default function BoardEditor() {
     ]);
   };
 
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragPreview(null);
+
+    const componentType = draggingType || (e.dataTransfer.getData('componentType') as 'header' | 'text' | 'image');
+    setDraggingType(null);
+    if (!componentType) return;
+
+    // Get the drop position relative to the canvas
+    const canvas = e.currentTarget as HTMLElement;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Calculate grid position
+    const cellWidth = 1200 / gridConfig.columns;
+    const gridX = Math.floor(x / cellWidth);
+    const gridY = Math.floor(y / gridConfig.rowHeight);
+
+    // Create component at the drop position
+    handleAddComponent(componentType, { x: Math.min(gridX, gridConfig.columns - 4), y: gridY });
+  };
+
+  const handleComponentDragStart = (type: 'header' | 'text' | 'image') => {
+    setDraggingType(type);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+
+    if (!draggingType) return;
+
+    // Get the drop position relative to the canvas
+    const canvas = e.currentTarget as HTMLElement;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Calculate grid position
+    const cellWidth = 1200 / gridConfig.columns;
+    const gridX = Math.floor(x / cellWidth);
+    const gridY = Math.floor(y / gridConfig.rowHeight);
+
+    // Get component size
+    const component = getComponent(draggingType);
+    const w = component?.defaultSize.w || 4;
+    const h = component?.defaultSize.h || 2;
+
+    // Update preview
+    setDragPreview({
+      x: gridX,
+      y: gridY,
+      w,
+      h
+    });
+  };
+
+  const handleDragLeave = () => {
+    setDragPreview(null);
+  };
+
+  const handleDragEnd = () => {
+    setDraggingType(null);
+    setDragPreview(null);
+  };
+
   const selectedComponent = components.find((c) => c.id === selectedComponentId);
 
   if (board === undefined) {
@@ -211,7 +282,11 @@ export default function BoardEditor() {
           <p className="text-sm text-gray-600">{board.description}</p>
         </div>
 
-        <ComponentToolbar onAddComponent={handleAddComponent} />
+        <ComponentToolbar
+          onAddComponent={handleAddComponent}
+          onDragStart={handleComponentDragStart}
+          onDragEnd={handleDragEnd}
+        />
 
         <div className="mt-auto space-y-2">
           <Button onClick={handleSave} disabled={isSaving} className="w-full">
@@ -235,7 +310,13 @@ export default function BoardEditor() {
 
       {/* Canvas */}
       <div className="flex-1 overflow-auto p-4 relative" style={{ backgroundColor }}>
-        <div className="relative" style={{ width: '1200px', minHeight: `${gridConfig.rows * gridConfig.rowHeight}px` }}>
+        <div
+          className="relative"
+          style={{ width: '1200px', minHeight: `${gridConfig.rows * gridConfig.rowHeight}px` }}
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+        >
           {/* Grid overlay */}
           <div
             className="absolute top-0 left-0 pointer-events-none border-r border-b"
@@ -251,6 +332,18 @@ export default function BoardEditor() {
               minHeight: `${gridConfig.rows * gridConfig.rowHeight}px`,
             }}
           />
+          {/* Drag Preview */}
+          {dragPreview && (
+            <div
+              className="absolute bg-blue-500/30 border-2 border-blue-500 rounded pointer-events-none z-50"
+              style={{
+                left: `${(dragPreview.x * 1200) / gridConfig.columns}px`,
+                top: `${dragPreview.y * gridConfig.rowHeight}px`,
+                width: `${(dragPreview.w * 1200) / gridConfig.columns}px`,
+                height: `${dragPreview.h * gridConfig.rowHeight}px`,
+              }}
+            />
+          )}
           <GridLayout
             className="layout"
             layout={layout}
