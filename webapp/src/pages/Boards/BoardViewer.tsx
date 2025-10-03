@@ -3,72 +3,7 @@ import { useQuery } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import type { Id } from '@convex/_generated/dataModel';
 import { useTranslation } from 'react-i18next';
-import { ImageIcon } from 'lucide-react';
-
-// Component renderers
-function HeaderComponent({ config }: { config: any }) {
-  return (
-    <div
-      className="h-full p-4"
-      style={{
-        fontSize: config.fontSize || '24px',
-        color: config.color || '#000000',
-        textAlign: config.alignment || 'left',
-      }}
-    >
-      <h1 className="font-bold">{config.text || 'Header'}</h1>
-    </div>
-  );
-}
-
-function TextComponent({ config }: { config: any }) {
-  return (
-    <div
-      className="h-full p-4"
-      style={{
-        fontSize: config.fontSize || '16px',
-        color: config.color || '#000000',
-        textAlign: config.alignment || 'left',
-      }}
-    >
-      <p>{config.content || 'Text'}</p>
-    </div>
-  );
-}
-
-function ImageComponent({ config }: { config: any }) {
-  // If storageId exists, fetch the authorized URL
-  const imageUrl = useQuery(
-    api.files.getUrl,
-    config.storageId ? { storageId: config.storageId } : 'skip'
-  );
-
-  // Use uploaded image URL, fallback to external URL
-  const src = imageUrl || config.imageUrl;
-
-  // If no image, show placeholder
-  if (!src) {
-    return (
-      <div className="h-full w-full p-2 flex flex-col items-center justify-center bg-gray-100 text-gray-400">
-        <ImageIcon className="h-16 w-16 mb-2" />
-        <p className="text-sm">No Image</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="h-full w-full p-2">
-      <img
-        src={src}
-        alt={config.alt || 'Image'}
-        className="h-full w-full"
-        style={{
-          objectFit: config.fit || 'cover',
-        }}
-      />
-    </div>
-  );
-}
+import { getComponent } from '@/components/board-components';
 
 export default function BoardViewer() {
   const { t } = useTranslation();
@@ -114,9 +49,10 @@ export default function BoardViewer() {
                 gridRow: `${position.y + 1} / span ${position.h}`,
               }}
             >
-              {type === 'header' && <HeaderComponent config={config} />}
-              {type === 'text' && <TextComponent config={config} />}
-              {type === 'image' && <ImageComponent config={config} />}
+              {(() => {
+                const boardComponent = getComponent(type);
+                return boardComponent ? boardComponent.render(config) : null;
+              })()}
             </div>
           );
         })}

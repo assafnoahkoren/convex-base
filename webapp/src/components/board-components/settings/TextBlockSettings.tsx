@@ -1,22 +1,22 @@
-import { useTranslation } from 'react-i18next';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-interface CommonTextSettingsProps {
-  config: {
-    fontSize: string;
-    color: string;
-    alignment: string;
-    verticalAlignment?: string;
-  };
+export interface TextBlockConfig {
+  fontSize?: string;
+  color?: string;
+  alignment?: string;
+  verticalAlignment?: string;
+  fontWeight?: string;
+}
+
+interface TextBlockSettingsProps {
+  config: TextBlockConfig;
   onChange: (field: string, value: string) => void;
   fontSizeOptions?: string[];
 }
 
-export function CommonTextSettings({ config, onChange, fontSizeOptions }: CommonTextSettingsProps) {
-  const { t } = useTranslation();
-
+export function TextBlockSettings({ config, onChange, fontSizeOptions }: TextBlockSettingsProps) {
   const defaultFontSizes = fontSizeOptions || [
     '12px', '14px', '16px', '18px', '20px', '24px', '32px', '40px', '48px'
   ];
@@ -24,8 +24,11 @@ export function CommonTextSettings({ config, onChange, fontSizeOptions }: Common
   return (
     <>
       <div>
-        <Label htmlFor="fontSize">{t('boards.editor.config.fontSize')}</Label>
-        <Select value={config.fontSize} onValueChange={(value) => onChange('fontSize', value)}>
+        <Label htmlFor="fontSize">Font Size</Label>
+        <Select
+          value={config.fontSize || '16px'}
+          onValueChange={(value) => onChange('fontSize', value)}
+        >
           <SelectTrigger>
             <SelectValue />
           </SelectTrigger>
@@ -38,17 +41,17 @@ export function CommonTextSettings({ config, onChange, fontSizeOptions }: Common
       </div>
 
       <div>
-        <Label htmlFor="color">{t('boards.editor.config.color')}</Label>
+        <Label htmlFor="color">Text Color</Label>
         <div className="flex gap-2">
           <Input
             id="color"
             type="color"
-            value={config.color}
+            value={config.color || '#000000'}
             onChange={(e) => onChange('color', e.target.value)}
             className="w-20 h-10"
           />
           <Input
-            value={config.color}
+            value={config.color || '#000000'}
             onChange={(e) => onChange('color', e.target.value)}
             className="flex-1"
           />
@@ -56,8 +59,28 @@ export function CommonTextSettings({ config, onChange, fontSizeOptions }: Common
       </div>
 
       <div>
+        <Label htmlFor="fontWeight">Font Weight</Label>
+        <Select
+          value={config.fontWeight || 'normal'}
+          onValueChange={(value) => onChange('fontWeight', value)}
+        >
+          <SelectTrigger>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="normal">Normal</SelectItem>
+            <SelectItem value="bold">Bold</SelectItem>
+            <SelectItem value="lighter">Lighter</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div>
         <Label htmlFor="alignment">Horizontal Alignment</Label>
-        <Select value={config.alignment} onValueChange={(value) => onChange('alignment', value)}>
+        <Select
+          value={config.alignment || 'left'}
+          onValueChange={(value) => onChange('alignment', value)}
+        >
           <SelectTrigger>
             <SelectValue />
           </SelectTrigger>

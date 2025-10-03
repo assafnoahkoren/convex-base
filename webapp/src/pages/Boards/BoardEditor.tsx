@@ -7,62 +7,12 @@ import { useTranslation } from 'react-i18next';
 import GridLayout from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Save, Eye, X, History, GripVertical, ImageIcon, Settings } from 'lucide-react';
+import { ArrowLeft, Save, Eye, X, History, GripVertical, Settings } from 'lucide-react';
 import { ComponentToolbar } from '@/components/Board/ComponentToolbar';
 import { ConfigPanel } from '@/components/Board/ConfigPanel';
 import { BoardSettings } from '@/components/Board/BoardSettings';
 import { QuickSettings } from '@/components/Board/QuickSettings';
-
-// Component renderers (same as viewer but editable)
-function HeaderComponent({ config }: { config: any }) {
-  return (
-    <div className="h-full p-4" style={{ fontSize: config.fontSize || '24px', color: config.color || '#000000', textAlign: config.alignment || 'left' }}>
-      <h1 className="font-bold">{config.text || 'Header'}</h1>
-    </div>
-  );
-}
-
-function TextComponent({ config }: { config: any }) {
-  return (
-    <div className="h-full p-4" style={{ fontSize: config.fontSize || '16px', color: config.color || '#000000', textAlign: config.alignment || 'left' }}>
-      <p>{config.content || 'Text'}</p>
-    </div>
-  );
-}
-
-function ImageComponent({ config }: { config: any }) {
-  // If storageId exists, fetch the authorized URL
-  const imageUrl = useQuery(
-    api.files.getUrl,
-    config.storageId ? { storageId: config.storageId } : 'skip'
-  );
-
-  // Use uploaded image URL, fallback to external URL
-  const src = imageUrl || config.imageUrl;
-
-  // If no image, show placeholder
-  if (!src) {
-    return (
-      <div className="h-full w-full p-2 flex flex-col items-center justify-center bg-gray-100 text-gray-400">
-        <ImageIcon className="h-16 w-16 mb-2" />
-        <p className="text-sm">No Image</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="h-full w-full p-2">
-      <img
-        src={src}
-        alt={config.alt || 'Image'}
-        className="h-full w-full"
-        style={{
-          objectFit: config.fit || 'cover',
-        }}
-      />
-    </div>
-  );
-}
+import { getComponent } from '@/components/board-components';
 
 export default function BoardEditor() {
   const { t } = useTranslation();
@@ -141,15 +91,14 @@ export default function BoardEditor() {
 
   const handleAddComponent = (type: 'header' | 'text' | 'image') => {
     const newId = `${type}-${Date.now()}`;
+    const component = getComponent(type);
+    if (!component) return;
+
     const newComponent = {
       id: newId,
       type,
       position: { x: 0, y: 0, w: 4, h: 2 },
-      config: type === 'header'
-        ? { text: 'New Header', fontSize: '24px', color: '#000000', alignment: 'left' }
-        : type === 'text'
-        ? { content: 'New Text', fontSize: '16px', color: '#000000', alignment: 'left' }
-        : { alt: 'Image', fit: 'cover' },
+      config: component.defaultConfig,
     };
 
     setComponents([...components, newComponent]);
@@ -301,9 +250,10 @@ export default function BoardEditor() {
                 <X className="h-3 w-3" />
               </Button>
               {/* Component Content */}
-              {component.type === 'header' && <HeaderComponent config={component.config} />}
-              {component.type === 'text' && <TextComponent config={component.config} />}
-              {component.type === 'image' && <ImageComponent config={component.config} />}
+              {(() => {
+                const boardComponent = getComponent(component.type);
+                return boardComponent ? boardComponent.render(component.config) : null;
+              })()}
             </div>
           ))}
           </GridLayout>

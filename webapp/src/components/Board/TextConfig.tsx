@@ -9,6 +9,7 @@ interface TextConfigProps {
     fontSize: string;
     color: string;
     alignment: string;
+    verticalAlignment?: string;
   };
   onChange: (config: any) => void;
 }
