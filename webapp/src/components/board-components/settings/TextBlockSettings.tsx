@@ -1,6 +1,7 @@
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { SettingsSectionHeader } from '@/components/ui/settings-section-header';
 
 export interface TextBlockConfig {
   fontSize?: string;
@@ -23,6 +24,8 @@ export function TextBlockSettings({ config, onChange, fontSizeOptions }: TextBlo
 
   return (
     <>
+      <SettingsSectionHeader title="Text Styling" />
+
       <div>
         <Label htmlFor="fontSize">Font Size</Label>
         <Select

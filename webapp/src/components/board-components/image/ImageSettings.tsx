@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Upload, Loader2 } from 'lucide-react';
 import type { SettingsProps } from '../types';
 import { BlockSettings } from '../settings/BlockSettings';
+import { SettingsSectionHeader } from '@/components/ui/settings-section-header';
 
 export function ImageSettings({ config, onChange, boardId }: SettingsProps) {
   const { t } = useTranslation();
@@ -74,6 +75,8 @@ export function ImageSettings({ config, onChange, boardId }: SettingsProps) {
 
   return (
     <div className="space-y-4">
+      <SettingsSectionHeader title="Image Source" />
+
       {/* File Upload Section */}
       <div>
         <Label>{t('boards.editor.config.uploadImage')}</Label>

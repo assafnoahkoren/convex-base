@@ -1,5 +1,6 @@
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { SettingsSectionHeader } from '@/components/ui/settings-section-header';
 
 export interface BlockConfig {
   backgroundColor?: string;
@@ -15,6 +16,8 @@ interface BlockSettingsProps {
 export function BlockSettings({ config, onChange }: BlockSettingsProps) {
   return (
     <>
+      <SettingsSectionHeader title="Block Styling" />
+
       <div>
         <Label htmlFor="backgroundColor">Background Color</Label>
         <div className="flex gap-2">

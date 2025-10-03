@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import type { SettingsProps } from '../types';
 import { BlockSettings } from '../settings/BlockSettings';
 import { TextBlockSettings } from '../settings/TextBlockSettings';
+import { SettingsSectionHeader } from '@/components/ui/settings-section-header';
 
 export function HeaderSettings({ config, onChange }: SettingsProps) {
   const handleChange = (field: string, value: string) => {
@@ -11,6 +12,8 @@ export function HeaderSettings({ config, onChange }: SettingsProps) {
 
   return (
     <div className="space-y-4">
+      <SettingsSectionHeader title="Content" />
+
       <div>
         <Label htmlFor="text">Header Text</Label>
         <Input
