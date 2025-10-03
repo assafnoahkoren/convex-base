@@ -1,7 +1,7 @@
 import type { BoardComponent } from './types';
-import { headerComponent } from './header';
-import { textComponent } from './text';
-import { imageComponent } from './image';
+import { headerComponent } from './header/index.tsx';
+import { textComponent } from './text/index.tsx';
+import { imageComponent } from './image/index.tsx';
 
 // Component registry - all available board components
 export const boardComponents: Record<string, BoardComponent> = {

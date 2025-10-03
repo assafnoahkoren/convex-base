@@ -3,7 +3,7 @@ import { useQuery } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import type { Id } from '@convex/_generated/dataModel';
 import { useTranslation } from 'react-i18next';
-import { getComponent } from '@/components/board-components';
+import { getComponent } from '@/components/board-components/index.tsx';
 
 export default function BoardViewer() {
   const { t } = useTranslation();

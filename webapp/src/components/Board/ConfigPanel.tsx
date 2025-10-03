@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 import type { Id } from '@convex/_generated/dataModel';
-import { getComponent } from '@/components/board-components';
+import { getComponent } from '@/components/board-components/index.tsx';
 
 interface ConfigPanelProps {
   component: any;

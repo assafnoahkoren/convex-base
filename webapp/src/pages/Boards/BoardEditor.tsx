@@ -12,7 +12,7 @@ import { ComponentToolbar } from '@/components/Board/ComponentToolbar';
 import { ConfigPanel } from '@/components/Board/ConfigPanel';
 import { BoardSettings } from '@/components/Board/BoardSettings';
 import { QuickSettings } from '@/components/Board/QuickSettings';
-import { getComponent } from '@/components/board-components';
+import { getComponent } from '@/components/board-components/index.tsx';
 
 export default function BoardEditor() {
   const { t } = useTranslation();
