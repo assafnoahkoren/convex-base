@@ -29,10 +29,19 @@ function TextComponent({ config }: { config: any }) {
 }
 
 function ImageComponent({ config }: { config: any }) {
+  // If storageId exists, fetch the authorized URL
+  const imageUrl = useQuery(
+    api.files.getUrl,
+    config.storageId ? { storageId: config.storageId } : 'skip'
+  );
+
+  // Use uploaded image URL, fallback to external URL, then placeholder
+  const src = imageUrl || config.imageUrl || 'https://via.placeholder.com/300';
+
   return (
     <div className="h-full w-full p-2">
       <img
-        src={config.imageUrl || 'https://via.placeholder.com/300'}
+        src={src}
         alt={config.alt || 'Image'}
         className="h-full w-full"
         style={{
@@ -254,6 +263,7 @@ export default function BoardEditor() {
           component={selectedComponent}
           onClose={() => setSelectedComponentId(null)}
           onConfigChange={handleConfigChange}
+          boardId={boardId as Id<'boards'>}
         />
       )}
     </div>

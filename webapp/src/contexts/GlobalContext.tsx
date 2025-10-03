@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { OrganizationProvider } from './OrganizationContext';
 
 export function GlobalContext({ children }: { children: ReactNode }) {

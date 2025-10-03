@@ -4,14 +4,16 @@ import { X } from 'lucide-react';
 import { HeaderConfig } from './HeaderConfig';
 import { TextConfig } from './TextConfig';
 import { ImageConfig } from './ImageConfig';
+import type { Id } from '@convex/_generated/dataModel';
 
 interface ConfigPanelProps {
   component: any;
   onClose: () => void;
   onConfigChange: (config: any) => void;
+  boardId: Id<'boards'>;
 }
 
-export function ConfigPanel({ component, onClose, onConfigChange }: ConfigPanelProps) {
+export function ConfigPanel({ component, onClose, onConfigChange, boardId }: ConfigPanelProps) {
   const { t } = useTranslation();
 
   if (!component) return null;
@@ -33,7 +35,7 @@ export function ConfigPanel({ component, onClose, onConfigChange }: ConfigPanelP
           <TextConfig config={component.config} onChange={onConfigChange} />
         )}
         {component.type === 'image' && (
-          <ImageConfig config={component.config} onChange={onConfigChange} />
+          <ImageConfig config={component.config} onChange={onConfigChange} boardId={boardId} />
         )}
       </div>
     </div>

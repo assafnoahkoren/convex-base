@@ -33,7 +33,7 @@ export default function BoardHistory() {
     }
   };
 
-  const handlePreview = (versionId: Id<'boardVersions'>) => {
+  const handlePreview = (_versionId: Id<'boardVersions'>) => {
     // For now, just navigate back - in a full implementation,
     // we'd open a modal or separate page showing the version
     alert(t('boards.history.previewNotImplemented'));
