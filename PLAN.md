@@ -112,27 +112,27 @@ A SaaS platform for organizations to create and manage custom content boards for
 
 ---
 
-### Step 2: Boards Dashboard
+### Step 2: Boards Dashboard ✅
 **Goal:** List and manage boards
 
-- [ ] Create `/boards` route in router
-- [ ] Create `webapp/src/pages/Boards/BoardsList.tsx`:
-  - [ ] Display all boards in card grid
-  - [ ] Show board name, description, last updated
-  - [ ] "Create Board" button
-  - [ ] Actions: Edit, Duplicate, Delete
-  - [ ] Empty state when no boards
-- [ ] Create `webapp/src/pages/Boards/CreateBoardModal.tsx`:
-  - [ ] Form with name and description
-  - [ ] Initialize with default empty grid
-  - [ ] Redirect to editor after creation
-- [ ] Update Shell sidebar to include Boards link
+- [x] Create `/boards` route in router
+- [x] Create `webapp/src/pages/Boards/BoardsList.tsx`:
+  - [x] Display all boards in card grid
+  - [x] Show board name, description, last updated
+  - [x] "Create Board" button
+  - [x] Actions: Edit, Duplicate, Delete
+  - [x] Empty state when no boards
+- [x] Create `webapp/src/pages/Boards/CreateBoardModal.tsx`:
+  - [x] Form with name and description
+  - [x] Initialize with default empty grid
+  - [x] Redirect to editor after creation
+- [x] Update Shell sidebar to include Boards link
 
 **Acceptance Criteria:**
-- Can view all organization's boards
-- Can create new board with name
-- Can navigate to board editor
-- Can delete boards
+- ✅ Can view all organization's boards
+- ✅ Can create new board with name
+- ✅ Can navigate to board editor
+- ✅ Can delete boards
 
 ---
 
