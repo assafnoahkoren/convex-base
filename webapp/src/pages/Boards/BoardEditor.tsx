@@ -486,7 +486,12 @@ export default function BoardEditor() {
                   {/* Component Content */}
                   {(() => {
                     const boardComponent = getComponent(component.type);
-                    return boardComponent ? boardComponent.render(component.config) : null;
+                    const handleComponentConfigChange = (newConfig: any) => {
+                      setComponents(components.map((c) =>
+                        c.id === component.id ? { ...c, config: newConfig } : c
+                      ));
+                    };
+                    return boardComponent ? boardComponent.render(component.config, handleComponentConfigChange) : null;
                   })()}
                 </div>
               </BlockContextMenu>

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { HeaderConfig } from './HeaderSettings';
 
 const getVerticalAlignClass = (align: string) => {
@@ -8,7 +9,40 @@ const getVerticalAlignClass = (align: string) => {
   }
 };
 
-export function HeaderComponent({ config }: { config: HeaderConfig }) {
+export function HeaderComponent({
+  config,
+  onConfigChange
+}: {
+  config: HeaderConfig;
+  onConfigChange?: (config: HeaderConfig) => void;
+}) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editText, setEditText] = useState(config.text || 'Header');
+
+  const handleDoubleClick = () => {
+    if (onConfigChange) {
+      setIsEditing(true);
+      setEditText(config.text || 'Header');
+    }
+  };
+
+  const handleBlur = () => {
+    setIsEditing(false);
+    if (onConfigChange && editText !== config.text) {
+      onConfigChange({ ...config, text: editText });
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleBlur();
+    } else if (e.key === 'Escape') {
+      setIsEditing(false);
+      setEditText(config.text || 'Header');
+    }
+  };
+
   return (
     <div
       className={`h-full ${getVerticalAlignClass(config.verticalAlignment || 'top')}`}
@@ -21,10 +55,29 @@ export function HeaderComponent({ config }: { config: HeaderConfig }) {
         borderRadius: config.borderRadius || '0px',
         fontWeight: config.fontWeight || 'bold',
       }}
+      onDoubleClick={handleDoubleClick}
     >
-      <h1 className="w-full" style={{ fontWeight: config.fontWeight || 'bold' }}>
-        {config.text || 'Header'}
-      </h1>
+      {isEditing ? (
+        <input
+          type="text"
+          value={editText}
+          onChange={(e) => setEditText(e.target.value)}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+          autoFocus
+          className="w-full bg-transparent border-none outline-none"
+          style={{
+            fontSize: config.fontSize || '24px',
+            color: config.color || '#000000',
+            textAlign: config.alignment || 'left',
+            fontWeight: config.fontWeight || 'bold',
+          }}
+        />
+      ) : (
+        <h1 className="w-full" style={{ fontWeight: config.fontWeight || 'bold' }}>
+          {config.text || 'Header'}
+        </h1>
+      )}
     </div>
   );
 }

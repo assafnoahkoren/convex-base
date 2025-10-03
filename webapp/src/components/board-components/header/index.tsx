@@ -7,7 +7,7 @@ export const headerComponent: BoardComponent<HeaderConfig> = {
   type: 'header',
   displayName: 'Header',
   icon: Type,
-  render: (config) => <HeaderComponent config={config} />,
+  render: (config, onConfigChange) => <HeaderComponent config={config} onConfigChange={onConfigChange} />,
   settings: (props) => <HeaderSettings {...props} />,
   defaultConfig: {
     text: 'New Header',

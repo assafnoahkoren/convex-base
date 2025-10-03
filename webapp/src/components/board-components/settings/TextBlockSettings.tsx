@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { SettingsSectionHeader } from '@/components/ui/settings-section-header';
 import { Button } from '@/components/ui/button';
-import { AlignLeft, AlignCenter, AlignRight, AlignVerticalSpaceAround, AlignStartVertical, AlignEndVertical } from 'lucide-react';
+import { AlignLeft, AlignCenter, AlignRight, AlignVerticalSpaceAround, AlignStartVertical, AlignEndVertical, AlignEndHorizontal, AlignStartHorizontal } from 'lucide-react';
 
 export interface TextBlockConfig {
   fontSize?: string;
@@ -117,7 +117,7 @@ export function TextBlockSettings({ config, onChange, fontSizeOptions }: TextBlo
             onClick={() => onChange('verticalAlignment', 'top')}
             className="flex-1"
           >
-            <AlignStartVertical className="h-4 w-4" />
+            <AlignStartHorizontal className="h-4 w-4" />
           </Button>
           <Button
             type="button"
@@ -135,7 +135,7 @@ export function TextBlockSettings({ config, onChange, fontSizeOptions }: TextBlo
             onClick={() => onChange('verticalAlignment', 'bottom')}
             className="flex-1"
           >
-            <AlignEndVertical className="h-4 w-4" />
+            <AlignEndHorizontal className="h-4 w-4" />
           </Button>
         </div>
       </div>

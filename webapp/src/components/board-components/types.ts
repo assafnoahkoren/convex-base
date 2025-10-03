@@ -14,7 +14,7 @@ export interface BoardComponent<T extends BoardComponentConfig = BoardComponentC
   type: string;
   displayName: string;
   icon?: React.ComponentType<{ className?: string }>;
-  render: (config: T) => JSX.Element;
+  render: (config: T, onConfigChange?: (config: T) => void) => JSX.Element;
   settings: (props: SettingsProps<T>) => JSX.Element;
   defaultConfig: T;
   defaultSize: {
