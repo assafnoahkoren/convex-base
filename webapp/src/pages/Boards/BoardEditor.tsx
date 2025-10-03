@@ -156,8 +156,8 @@ export default function BoardEditor() {
       ...layout,
       {
         i: newId,
-        x: (layoutItem.x + layoutItem.w) % gridConfig.columns,
-        y: layoutItem.y,
+        x: layoutItem.x,
+        y: layoutItem.y + layoutItem.h,
         w: layoutItem.w,
         h: layoutItem.h
       },
