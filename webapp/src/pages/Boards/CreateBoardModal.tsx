@@ -12,6 +12,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
+import { useTranslation } from 'react-i18next';
 
 interface CreateBoardModalProps {
   open: boolean;
@@ -19,6 +20,7 @@ interface CreateBoardModalProps {
 }
 
 export function CreateBoardModal({ open, onClose }: CreateBoardModalProps) {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,7 +45,7 @@ export function CreateBoardModal({ open, onClose }: CreateBoardModalProps) {
       // Navigate to editor
       navigate(`/boards/${boardId}/edit`);
     } catch (error) {
-      alert('Failed to create board');
+      alert(t('boards.create.error'));
       setIsSubmitting(false);
     }
   };
@@ -52,38 +54,38 @@ export function CreateBoardModal({ open, onClose }: CreateBoardModalProps) {
     <Sheet open={open} onOpenChange={onClose}>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Create New Board</SheetTitle>
+          <SheetTitle>{t('boards.create.title')}</SheetTitle>
           <SheetDescription>
-            Create a new display board for your organization
+            {t('boards.create.description')}
           </SheetDescription>
         </SheetHeader>
         <form onSubmit={handleSubmit} className="space-y-4 mt-6">
           <div className="space-y-2">
-            <Label htmlFor="name">Board Name</Label>
+            <Label htmlFor="name">{t('boards.create.nameLabel')}</Label>
             <Input
               id="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              placeholder="Lobby Display"
+              placeholder={t('boards.create.namePlaceholder')}
               disabled={isSubmitting}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="description">Description (Optional)</Label>
+            <Label htmlFor="description">{t('boards.create.descriptionLabel')}</Label>
             <Input
               id="description"
               type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Main lobby information board"
+              placeholder={t('boards.create.descriptionPlaceholder')}
               disabled={isSubmitting}
             />
           </div>
           <div className="flex gap-2">
             <Button type="submit" disabled={isSubmitting} className="flex-1">
-              {isSubmitting ? 'Creating...' : 'Create Board'}
+              {isSubmitting ? t('boards.create.creating') : t('boards.create.submitButton')}
             </Button>
             <Button
               type="button"
@@ -91,7 +93,7 @@ export function CreateBoardModal({ open, onClose }: CreateBoardModalProps) {
               onClick={onClose}
               disabled={isSubmitting}
             >
-              Cancel
+              {t('boards.create.cancelButton')}
             </Button>
           </div>
         </form>
