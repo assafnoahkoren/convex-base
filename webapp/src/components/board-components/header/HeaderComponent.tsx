@@ -19,8 +19,9 @@ export function HeaderComponent({
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(config.text || 'Header');
 
-  const handleDoubleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
     if (onConfigChange) {
+      e.stopPropagation();
       setIsEditing(true);
       setEditText(config.text || 'Header');
     }
@@ -55,7 +56,6 @@ export function HeaderComponent({
         borderRadius: config.borderRadius || '0px',
         fontWeight: config.fontWeight || 'bold',
       }}
-      onDoubleClick={handleDoubleClick}
     >
       {isEditing ? (
         <input
@@ -74,7 +74,11 @@ export function HeaderComponent({
           }}
         />
       ) : (
-        <h1 className="w-full" style={{ fontWeight: config.fontWeight || 'bold' }}>
+        <h1
+          className="w-full cursor-text"
+          style={{ fontWeight: config.fontWeight || 'bold' }}
+          onClick={handleClick}
+        >
           {config.text || 'Header'}
         </h1>
       )}
