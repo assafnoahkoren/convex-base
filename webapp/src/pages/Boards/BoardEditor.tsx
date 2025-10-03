@@ -12,6 +12,7 @@ import { ComponentToolbar } from '@/components/Board/ComponentToolbar';
 import { ConfigPanel } from '@/components/Board/ConfigPanel';
 import { BoardSettings } from '@/components/Board/BoardSettings';
 import { QuickSettings } from '@/components/Board/QuickSettings';
+import { BlockContextMenu } from '@/components/Board/BlockContextMenu';
 import { getComponent } from '@/components/board-components/index.tsx';
 
 export default function BoardEditor() {
@@ -28,6 +29,7 @@ export default function BoardEditor() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [gridConfig, setGridConfig] = useState({ columns: 12, rows: 12, rowHeight: 100 });
   const [backgroundColor, setBackgroundColor] = useState('#ffffff');
+  const [copiedStyle, setCopiedStyle] = useState<any>(null);
 
   // Load board data into state
   useEffect(() => {
@@ -122,6 +124,44 @@ export default function BoardEditor() {
     setComponents(components.map((c) =>
       c.id === selectedComponentId ? { ...c, config } : c
     ));
+  };
+
+  const handleCopyStyle = (componentId: string) => {
+    const component = components.find((c) => c.id === componentId);
+    if (component) {
+      setCopiedStyle(component.config);
+    }
+  };
+
+  const handlePasteStyle = (componentId: string) => {
+    if (!copiedStyle) return;
+    setComponents(components.map((c) =>
+      c.id === componentId ? { ...c, config: { ...c.config, ...copiedStyle } } : c
+    ));
+  };
+
+  const handleDuplicate = (componentId: string) => {
+    const component = components.find((c) => c.id === componentId);
+    const layoutItem = layout.find((l) => l.i === componentId);
+    if (!component || !layoutItem) return;
+
+    const newId = `${component.type}-${Date.now()}`;
+    const newComponent = {
+      ...component,
+      id: newId,
+    };
+
+    setComponents([...components, newComponent]);
+    setLayout([
+      ...layout,
+      {
+        i: newId,
+        x: (layoutItem.x + layoutItem.w) % gridConfig.columns,
+        y: layoutItem.y,
+        w: layoutItem.w,
+        h: layoutItem.h
+      },
+    ]);
   };
 
   const selectedComponent = components.find((c) => c.id === selectedComponentId);
@@ -227,34 +267,43 @@ export default function BoardEditor() {
             preventCollision={true}
           >
           {components.map((component) => (
-            <div
-              key={component.id}
-              className={`rounded overflow-hidden relative group ${
-                selectedComponentId === component.id ? 'border-blue-500 border-2' : 'hover:border hover:border-blue-500'
-              }`}
-              onClick={() => setSelectedComponentId(component.id)}
-            >
-              {/* Drag Handle */}
-              <div className="drag-handle cursor-move absolute top-0 left-1/2 -translate-x-1/2 w-10 h-6 bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10 rounded-b-md">
-                <GripHorizontal className="h-4 w-4 text-gray-400" />
-              </div>
-              {/* Remove Button */}
-              <Button
-                variant="destructive"
-                size="icon"
-                className="absolute top-1 right-1 z-20 opacity-0 group-hover:opacity-100 transition-opacity h-5 w-5"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleRemoveComponent(component.id);
-                }}
+            <div key={component.id} className="h-full w-full">
+              <BlockContextMenu
+                onCopyStyle={() => handleCopyStyle(component.id)}
+                onPasteStyle={() => handlePasteStyle(component.id)}
+                onDuplicate={() => handleDuplicate(component.id)}
+                onDelete={() => handleRemoveComponent(component.id)}
+                hasCopiedStyle={!!copiedStyle}
               >
-                <X className="h-3 w-3" />
-              </Button>
-              {/* Component Content */}
-              {(() => {
-                const boardComponent = getComponent(component.type);
-                return boardComponent ? boardComponent.render(component.config) : null;
-              })()}
+                <div
+                  className={`h-full w-full rounded overflow-hidden relative group ${
+                    selectedComponentId === component.id ? 'border-blue-500 border-2' : 'hover:border hover:border-blue-500'
+                  }`}
+                  onClick={() => setSelectedComponentId(component.id)}
+                >
+                  {/* Drag Handle */}
+                  <div className="cursor-move absolute top-0 left-1/2 -translate-x-1/2 w-10 h-6 bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10 rounded-b-md drag-handle">
+                    <GripHorizontal className="h-4 w-4 text-gray-400" />
+                  </div>
+                  {/* Remove Button */}
+                  <Button
+                    variant="destructive"
+                    size="icon"
+                    className="absolute top-1 right-1 z-20 opacity-0 group-hover:opacity-100 transition-opacity h-5 w-5"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveComponent(component.id);
+                    }}
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                  {/* Component Content */}
+                  {(() => {
+                    const boardComponent = getComponent(component.type);
+                    return boardComponent ? boardComponent.render(component.config) : null;
+                  })()}
+                </div>
+              </BlockContextMenu>
             </div>
           ))}
           </GridLayout>
