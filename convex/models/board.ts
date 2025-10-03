@@ -11,6 +11,7 @@ export const boardModels = {
         columns: v.number(),
         rows: v.number(),
         rowHeight: v.number(),
+        rowGap: v.optional(v.number()),
       }),
       backgroundColor: v.optional(v.string()),
       components: v.array(

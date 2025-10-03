@@ -16,9 +16,10 @@ interface BoardSettingsProps {
     columns: number;
     rows: number;
     rowHeight: number;
+    rowGap?: number;
   };
   backgroundColor?: string;
-  onGridConfigChange: (config: { columns: number; rows: number; rowHeight: number }) => void;
+  onGridConfigChange: (config: { columns: number; rows: number; rowHeight: number; rowGap?: number }) => void;
   onBackgroundColorChange: (color: string) => void;
 }
 
@@ -50,6 +51,13 @@ export function BoardSettings({
     const rowHeight = parseInt(value);
     if (!isNaN(rowHeight) && rowHeight > 0 && rowHeight <= 500) {
       onGridConfigChange({ ...gridConfig, rowHeight });
+    }
+  };
+
+  const handleRowGapChange = (value: string) => {
+    const rowGap = parseInt(value);
+    if (!isNaN(rowGap) && rowGap >= 0 && rowGap <= 100) {
+      onGridConfigChange({ ...gridConfig, rowGap });
     }
   };
 
@@ -123,6 +131,20 @@ export function BoardSettings({
               onChange={(e) => handleRowHeightChange(e.target.value)}
             />
             <p className="text-xs text-gray-500">{t('boards.settings.rowHeightHelp')}</p>
+          </div>
+
+          {/* Row Gap */}
+          <div className="space-y-2">
+            <Label htmlFor="rowGap">Row Gap</Label>
+            <Input
+              id="rowGap"
+              type="number"
+              min="0"
+              max="100"
+              value={gridConfig.rowGap || 0}
+              onChange={(e) => handleRowGapChange(e.target.value)}
+            />
+            <p className="text-xs text-gray-500">Spacing between rows (in pixels)</p>
           </div>
         </div>
       </DialogContent>

@@ -28,7 +28,7 @@ export default function BoardEditor() {
   const [selectedComponentId, setSelectedComponentId] = useState<string | null>(null);
   const [selectedComponentIds, setSelectedComponentIds] = useState<Set<string>>(new Set());
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [gridConfig, setGridConfig] = useState({ columns: 12, rows: 12, rowHeight: 100 });
+  const [gridConfig, setGridConfig] = useState({ columns: 12, rows: 12, rowHeight: 100, rowGap: 0 });
   const [backgroundColor, setBackgroundColor] = useState('#ffffff');
   const [copiedStyle, setCopiedStyle] = useState<any>(null);
   const [dragPreview, setDragPreview] = useState<{ x: number; y: number; w: number; h: number } | null>(null);
@@ -47,7 +47,12 @@ export default function BoardEditor() {
       }));
       setLayout(gridLayout);
       setComponents(board.content.components);
-      setGridConfig(board.content.gridConfig);
+      setGridConfig({
+        columns: board.content.gridConfig.columns || 12,
+        rows: board.content.gridConfig.rows || 12,
+        rowHeight: board.content.gridConfig.rowHeight || 100,
+        rowGap: board.content.gridConfig.rowGap || 0,
+      });
       setBackgroundColor(board.content.backgroundColor || '#ffffff');
     }
   }, [board]);
@@ -380,26 +385,36 @@ export default function BoardEditor() {
       <div className="flex-1 overflow-auto p-4 relative" style={{ backgroundColor }}>
         <div
           className="relative"
-          style={{ width: '1200px', minHeight: `${gridConfig.rows * gridConfig.rowHeight}px` }}
+          style={{ width: '1200px', minHeight: `${gridConfig.rows * (gridConfig.rowHeight + (gridConfig.rowGap || 0))}px` }}
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
         >
           {/* Grid overlay */}
           <div
-            className="absolute top-0 left-0 pointer-events-none border-r border-b"
+            className="absolute top-0 left-0 pointer-events-none"
             style={{
-              backgroundImage: `
-                linear-gradient(to right, rgb(203 213 225 / 0.7) 1px, transparent 1px),
-                linear-gradient(to bottom, rgb(203 213 225 / 0.7) 1px, transparent 1px)
-              `,
-              backgroundSize: `${1200 / gridConfig.columns}px ${gridConfig.rowHeight}px`,
-              borderColor: 'rgb(203 213 225 / 0.7)',
               width: '1200px',
               height: '100%',
-              minHeight: `${gridConfig.rows * gridConfig.rowHeight}px`,
+              minHeight: `${gridConfig.rows * (gridConfig.rowHeight + (gridConfig.rowGap || 0))}px`,
             }}
-          />
+          >
+            {/* Draw grid cells accounting for gaps */}
+            {Array.from({ length: gridConfig.rows }).map((_, rowIndex) =>
+              Array.from({ length: gridConfig.columns }).map((_, colIndex) => (
+                <div
+                  key={`${rowIndex}-${colIndex}`}
+                  className="absolute border border-gray-300/70"
+                  style={{
+                    left: `${(colIndex * 1200) / gridConfig.columns}px`,
+                    top: `${rowIndex * (gridConfig.rowHeight + (gridConfig.rowGap || 0))}px`,
+                    width: `${1200 / gridConfig.columns}px`,
+                    height: `${gridConfig.rowHeight}px`,
+                  }}
+                />
+              ))
+            )}
+          </div>
           {/* Drag Preview */}
           {dragPreview && (
             <div
@@ -423,7 +438,7 @@ export default function BoardEditor() {
             onDragStop={() => setIsDraggingMultiple(false)}
             draggableHandle=".cursor-move"
             resizeHandles={['se', 'sw']}
-            margin={[0, 0]}
+            margin={[0, gridConfig.rowGap || 0]}
             containerPadding={[0, 0]}
             autoSize={true}
             verticalCompact={false}

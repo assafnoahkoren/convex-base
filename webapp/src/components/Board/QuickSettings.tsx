@@ -5,9 +5,10 @@ interface QuickSettingsProps {
     columns: number;
     rows: number;
     rowHeight: number;
+    rowGap?: number;
   };
   backgroundColor: string;
-  onGridConfigChange: (config: { columns: number; rows: number; rowHeight: number }) => void;
+  onGridConfigChange: (config: { columns: number; rows: number; rowHeight: number; rowGap?: number }) => void;
   onBackgroundColorChange: (color: string) => void;
 }
 
