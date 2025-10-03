@@ -235,18 +235,37 @@ export default function BoardEditor() {
       </div>
 
       {/* Canvas */}
-      <div className="flex-1 overflow-auto p-4" style={{ backgroundColor }}>
-        <GridLayout
-          className="layout"
-          layout={layout}
-          cols={gridConfig.columns}
-          rowHeight={gridConfig.rowHeight}
-          width={1200}
-          onLayoutChange={handleLayoutChange}
-          draggableHandle=".cursor-move"
-          margin={[0, 0]}
-          containerPadding={[0, 0]}
-        >
+      <div className="flex-1 overflow-auto p-4 relative" style={{ backgroundColor }}>
+        <div className="relative" style={{ width: '1200px', minHeight: `${gridConfig.rows * gridConfig.rowHeight}px` }}>
+          {/* Grid overlay */}
+          <div
+            className="absolute top-0 left-0 pointer-events-none border-r border-b"
+            style={{
+              backgroundImage: `
+                linear-gradient(to right, rgb(203 213 225 / 0.7) 1px, transparent 1px),
+                linear-gradient(to bottom, rgb(203 213 225 / 0.7) 1px, transparent 1px)
+              `,
+              backgroundSize: `${1200 / gridConfig.columns}px ${gridConfig.rowHeight}px`,
+              borderColor: 'rgb(203 213 225 / 0.7)',
+              width: '1200px',
+              height: '100%',
+              minHeight: `${gridConfig.rows * gridConfig.rowHeight}px`,
+            }}
+          />
+          <GridLayout
+            className="layout"
+            layout={layout}
+            cols={gridConfig.columns}
+            rowHeight={gridConfig.rowHeight}
+            width={1200}
+            onLayoutChange={handleLayoutChange}
+            draggableHandle=".cursor-move"
+            margin={[0, 0]}
+            containerPadding={[0, 0]}
+            autoSize={true}
+            verticalCompact={false}
+            compactType={null}
+          >
           {components.map((component) => (
             <div
               key={component.id}
@@ -277,7 +296,8 @@ export default function BoardEditor() {
               {component.type === 'image' && <ImageComponent config={component.config} />}
             </div>
           ))}
-        </GridLayout>
+          </GridLayout>
+        </div>
       </div>
 
       {/* Config Panel */}
