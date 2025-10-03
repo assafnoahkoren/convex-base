@@ -52,4 +52,15 @@ export const boardModels = {
   })
     .index("by_organization", ["organizationId"])
     .index("by_board", ["currentBoardId"]),
+
+  files: defineTable({
+    storageId: v.id("_storage"),
+    organizationId: v.id("organizations"),
+    boardId: v.id("boards"),
+    uploadedBy: v.id("users"),
+    uploadedAt: v.number(),
+  })
+    .index("by_storage", ["storageId"])
+    .index("by_organization", ["organizationId"])
+    .index("by_board", ["boardId"]),
 };

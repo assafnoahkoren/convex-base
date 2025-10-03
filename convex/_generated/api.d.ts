@@ -16,6 +16,7 @@ import type {
 import type * as auth from "../auth.js";
 import type * as boardVersions from "../boardVersions.js";
 import type * as boards from "../boards.js";
+import type * as files from "../files.js";
 import type * as http from "../http.js";
 import type * as models_auth from "../models/auth.js";
 import type * as models_board from "../models/board.js";
@@ -35,6 +36,7 @@ declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   boardVersions: typeof boardVersions;
   boards: typeof boards;
+  files: typeof files;
   http: typeof http;
   "models/auth": typeof models_auth;
   "models/board": typeof models_board;
