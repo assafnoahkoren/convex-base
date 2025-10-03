@@ -76,6 +76,21 @@ const en = {
   'boards.editor.addHeader': 'Add Header',
   'boards.editor.addText': 'Add Text',
   'boards.editor.addImage': 'Add Image',
+  'boards.editor.configPanel.title': 'Configure Component',
+  'boards.editor.config.text': 'Text',
+  'boards.editor.config.content': 'Content',
+  'boards.editor.config.fontSize': 'Font Size',
+  'boards.editor.config.color': 'Color',
+  'boards.editor.config.alignment': 'Alignment',
+  'boards.editor.config.alignLeft': 'Left',
+  'boards.editor.config.alignCenter': 'Center',
+  'boards.editor.config.alignRight': 'Right',
+  'boards.editor.config.imageUrl': 'Image URL',
+  'boards.editor.config.altText': 'Alt Text',
+  'boards.editor.config.imageFit': 'Image Fit',
+  'boards.editor.config.fitCover': 'Cover',
+  'boards.editor.config.fitContain': 'Contain',
+  'boards.editor.config.fitFill': 'Fill',
 } as const;
 
 export type TranslationKeys = keyof typeof en;

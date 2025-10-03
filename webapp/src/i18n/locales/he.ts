@@ -78,6 +78,21 @@ const he: Translations = {
   'boards.editor.addHeader': 'הוסף כותרת',
   'boards.editor.addText': 'הוסף טקסט',
   'boards.editor.addImage': 'הוסף תמונה',
+  'boards.editor.configPanel.title': 'הגדר רכיב',
+  'boards.editor.config.text': 'טקסט',
+  'boards.editor.config.content': 'תוכן',
+  'boards.editor.config.fontSize': 'גודל גופן',
+  'boards.editor.config.color': 'צבע',
+  'boards.editor.config.alignment': 'יישור',
+  'boards.editor.config.alignLeft': 'שמאל',
+  'boards.editor.config.alignCenter': 'מרכז',
+  'boards.editor.config.alignRight': 'ימין',
+  'boards.editor.config.imageUrl': 'כתובת תמונה',
+  'boards.editor.config.altText': 'טקסט חלופי',
+  'boards.editor.config.imageFit': 'התאמת תמונה',
+  'boards.editor.config.fitCover': 'כיסוי',
+  'boards.editor.config.fitContain': 'הכלה',
+  'boards.editor.config.fitFill': 'מילוי',
 };
 
 export default he;

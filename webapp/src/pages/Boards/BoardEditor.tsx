@@ -9,6 +9,7 @@ import 'react-grid-layout/css/styles.css';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Save, Eye, X } from 'lucide-react';
 import { ComponentToolbar } from '@/components/Board/ComponentToolbar';
+import { ConfigPanel } from '@/components/Board/ConfigPanel';
 
 // Component renderers (same as viewer but editable)
 function HeaderComponent({ config }: { config: any }) {
@@ -66,6 +67,7 @@ export default function BoardEditor() {
   const [layout, setLayout] = useState<GridLayout.Layout[]>([]);
   const [components, setComponents] = useState<any[]>([]);
   const [isSaving, setIsSaving] = useState(false);
+  const [selectedComponentId, setSelectedComponentId] = useState<string | null>(null);
 
   // Load board data into state
   useEffect(() => {
@@ -147,7 +149,20 @@ export default function BoardEditor() {
   const handleRemoveComponent = (componentId: string) => {
     setComponents(components.filter((c) => c.id !== componentId));
     setLayout(layout.filter((l) => l.i !== componentId));
+    if (selectedComponentId === componentId) {
+      setSelectedComponentId(null);
+    }
   };
+
+  const handleConfigChange = (config: any) => {
+    if (!selectedComponentId) return;
+
+    setComponents(components.map((c) =>
+      c.id === selectedComponentId ? { ...c, config } : c
+    ));
+  };
+
+  const selectedComponent = components.find((c) => c.id === selectedComponentId);
 
   if (board === undefined) {
     return (
@@ -209,13 +224,19 @@ export default function BoardEditor() {
           {components.map((component) => (
             <div
               key={component.id}
-              className="border border-gray-300 rounded bg-white overflow-hidden hover:border-blue-500 relative group"
+              className={`border rounded bg-white overflow-hidden relative group cursor-pointer ${
+                selectedComponentId === component.id ? 'border-blue-500 border-2' : 'border-gray-300 hover:border-blue-500'
+              }`}
+              onClick={() => setSelectedComponentId(component.id)}
             >
               <Button
                 variant="destructive"
                 size="icon"
                 className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6"
-                onClick={() => handleRemoveComponent(component.id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleRemoveComponent(component.id);
+                }}
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -226,6 +247,15 @@ export default function BoardEditor() {
           ))}
         </GridLayout>
       </div>
+
+      {/* Config Panel */}
+      {selectedComponent && (
+        <ConfigPanel
+          component={selectedComponent}
+          onClose={() => setSelectedComponentId(null)}
+          onConfigChange={handleConfigChange}
+        />
+      )}
     </div>
   );
 }
