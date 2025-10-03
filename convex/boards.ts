@@ -265,3 +265,79 @@ export const duplicate = mutation({
     return newBoardId;
   },
 });
+
+// Add sample components to board (for testing)
+export const addSampleComponents = mutation({
+  args: { boardId: v.id("boards") },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("Not authenticated");
+    }
+
+    const board = await ctx.db.get(args.boardId);
+    if (!board) {
+      throw new Error("Board not found");
+    }
+
+    // Verify user has admin/owner access
+    const membership = await ctx.db
+      .query("organizationMembers")
+      .withIndex("by_organization_and_user", (q) =>
+        q.eq("organizationId", board.organizationId).eq("userId", userId)
+      )
+      .first();
+
+    if (!membership) {
+      throw new Error("Access denied");
+    }
+
+    if (membership.role !== "admin" && membership.role !== "owner") {
+      throw new Error("Permission denied");
+    }
+
+    // Add sample components
+    await ctx.db.patch(args.boardId, {
+      content: {
+        gridConfig: board.content.gridConfig,
+        components: [
+          {
+            id: "header-1",
+            type: "header" as const,
+            position: { x: 0, y: 0, w: 12, h: 1 },
+            config: {
+              text: "Welcome to Our Office",
+              fontSize: "32px",
+              color: "#1a1a1a",
+              alignment: "center",
+            },
+          },
+          {
+            id: "text-1",
+            type: "text" as const,
+            position: { x: 0, y: 1, w: 6, h: 2 },
+            config: {
+              content: "Today's announcements and updates will be displayed here.",
+              fontSize: "18px",
+              color: "#333333",
+              alignment: "left",
+            },
+          },
+          {
+            id: "image-1",
+            type: "image" as const,
+            position: { x: 6, y: 1, w: 6, h: 2 },
+            config: {
+              imageUrl: "https://via.placeholder.com/600x400/4f46e5/ffffff?text=Company+Logo",
+              alt: "Company Logo",
+              fit: "contain",
+            },
+          },
+        ],
+      },
+      updatedAt: Date.now(),
+    });
+
+    return args.boardId;
+  },
+});

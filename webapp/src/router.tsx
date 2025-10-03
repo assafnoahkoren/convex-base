@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import BoardsList from './pages/Boards/BoardsList';
+import BoardViewer from './pages/Boards/BoardViewer';
 
 export function Router() {
   return (
@@ -29,6 +30,14 @@ export function Router() {
               <Shell>
                 <BoardsList />
               </Shell>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/boards/:boardId/view"
+          element={
+            <ProtectedRoute>
+              <BoardViewer />
             </ProtectedRoute>
           }
         />
