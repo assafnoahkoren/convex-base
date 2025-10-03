@@ -1,0 +1,72 @@
+const en = {
+  'common.loading': 'Loading...',
+  'common.save': 'Save',
+  'common.cancel': 'Cancel',
+  'common.delete': 'Delete',
+  'common.edit': 'Edit',
+  'common.create': 'Create',
+  'common.duplicate': 'Duplicate',
+  'common.preview': 'Preview',
+  'common.back': 'Back',
+  'common.close': 'Close',
+
+  'auth.login.title': 'Login',
+  'auth.login.description': 'Enter your credentials to access your account',
+  'auth.login.email': 'Email',
+  'auth.login.emailPlaceholder': 'you@example.com',
+  'auth.login.password': 'Password',
+  'auth.login.loginButton': 'Login',
+  'auth.login.noAccount': "Don't have an account?",
+  'auth.login.registerLink': 'Register',
+  'auth.login.invalidCredentials': 'Invalid credentials',
+
+  'auth.register.title': 'Create an account',
+  'auth.register.description': 'Enter your details to get started',
+  'auth.register.email': 'Email',
+  'auth.register.emailPlaceholder': 'you@example.com',
+  'auth.register.password': 'Password',
+  'auth.register.registerButton': 'Register',
+  'auth.register.hasAccount': 'Already have an account?',
+  'auth.register.loginLink': 'Login',
+  'auth.register.registrationFailed': 'Registration failed',
+
+  'auth.signOut': 'Sign Out',
+
+  'onboarding.createOrganization.title': 'Create your organization',
+  'onboarding.createOrganization.description': 'Get started by creating your first organization',
+  'onboarding.createOrganization.organizationName': 'Organization Name',
+  'onboarding.createOrganization.organizationNamePlaceholder': 'Acme Inc.',
+  'onboarding.createOrganization.createButton': 'Create Organization',
+  'onboarding.createOrganization.creating': 'Creating...',
+  'onboarding.createOrganization.failed': 'Failed to create organization',
+
+  'navigation.menu': 'Menu',
+  'navigation.menuDescription': 'Navigate your application',
+  'navigation.home': 'Home',
+  'navigation.boards': 'Boards',
+
+  'boards.list.title': 'Boards',
+  'boards.list.description': "Manage your organization's display boards",
+  'boards.list.createBoard': 'Create Board',
+  'boards.list.emptyTitle': 'No boards yet',
+  'boards.list.emptyDescription': 'Create your first board to get started',
+  'boards.list.createFirstBoard': 'Create Your First Board',
+  'boards.list.lastUpdated': 'Last updated',
+  'boards.list.deleteFailed': 'Failed to delete board',
+  'boards.list.deleteConfirm': 'Are you sure you want to delete this board?',
+  'boards.list.duplicateFailed': 'Failed to duplicate board',
+
+  'boards.create.title': 'Create New Board',
+  'boards.create.description': 'Create a new display board for your organization',
+  'boards.create.boardName': 'Board Name',
+  'boards.create.boardNamePlaceholder': 'Lobby Display',
+  'boards.create.boardDescription': 'Description (Optional)',
+  'boards.create.boardDescriptionPlaceholder': 'Main lobby information board',
+  'boards.create.createButton': 'Create Board',
+  'boards.create.creating': 'Creating...',
+  'boards.create.failed': 'Failed to create board',
+} as const;
+
+export type TranslationKeys = keyof typeof en;
+export type Translations = Record<TranslationKeys, string>;
+export default en;

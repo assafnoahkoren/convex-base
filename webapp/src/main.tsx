@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { ConvexAuthProvider } from '@convex-dev/auth/react'
 import { ConvexReactClient } from 'convex/react'
 import './index.css'
+import './i18n/config'
 import App from './App.tsx'
 import { GlobalContext } from './contexts/GlobalContext'
 

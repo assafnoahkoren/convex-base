@@ -1,0 +1,72 @@
+import type { Translations } from './en';
+
+const he: Translations = {
+  'common.loading': 'טוען...',
+  'common.save': 'שמור',
+  'common.cancel': 'ביטול',
+  'common.delete': 'מחק',
+  'common.edit': 'ערוך',
+  'common.create': 'צור',
+  'common.duplicate': 'שכפל',
+  'common.preview': 'תצוגה מקדימה',
+  'common.back': 'חזור',
+  'common.close': 'סגור',
+
+  'auth.login.title': 'התחברות',
+  'auth.login.description': 'הזן את פרטי ההתחברות שלך',
+  'auth.login.email': 'אימייל',
+  'auth.login.emailPlaceholder': 'your@example.com',
+  'auth.login.password': 'סיסמה',
+  'auth.login.loginButton': 'התחבר',
+  'auth.login.noAccount': 'אין לך חשבון?',
+  'auth.login.registerLink': 'הירשם',
+  'auth.login.invalidCredentials': 'פרטי התחברות שגויים',
+
+  'auth.register.title': 'יצירת חשבון',
+  'auth.register.description': 'הזן את פרטיך כדי להתחיל',
+  'auth.register.email': 'אימייל',
+  'auth.register.emailPlaceholder': 'your@example.com',
+  'auth.register.password': 'סיסמה',
+  'auth.register.registerButton': 'הירשם',
+  'auth.register.hasAccount': 'כבר יש לך חשבון?',
+  'auth.register.loginLink': 'התחבר',
+  'auth.register.registrationFailed': 'ההרשמה נכשלה',
+
+  'auth.signOut': 'התנתק',
+
+  'onboarding.createOrganization.title': 'צור את הארגון שלך',
+  'onboarding.createOrganization.description': 'התחל על ידי יצירת הארגון הראשון שלך',
+  'onboarding.createOrganization.organizationName': 'שם הארגון',
+  'onboarding.createOrganization.organizationNamePlaceholder': 'חברת דוגמה בע"מ',
+  'onboarding.createOrganization.createButton': 'צור ארגון',
+  'onboarding.createOrganization.creating': 'יוצר...',
+  'onboarding.createOrganization.failed': 'יצירת הארגון נכשלה',
+
+  'navigation.menu': 'תפריט',
+  'navigation.menuDescription': 'נווט באפליקציה',
+  'navigation.home': 'בית',
+  'navigation.boards': 'לוחות',
+
+  'boards.list.title': 'לוחות',
+  'boards.list.description': 'נהל את לוחות התצוגה של הארגון שלך',
+  'boards.list.createBoard': 'צור לוח',
+  'boards.list.emptyTitle': 'אין לוחות עדיין',
+  'boards.list.emptyDescription': 'צור את הלוח הראשון שלך כדי להתחיל',
+  'boards.list.createFirstBoard': 'צור את הלוח הראשון שלך',
+  'boards.list.lastUpdated': 'עודכן לאחרונה',
+  'boards.list.deleteFailed': 'מחיקת הלוח נכשלה',
+  'boards.list.deleteConfirm': 'האם אתה בטוח שברצונך למחוק לוח זה?',
+  'boards.list.duplicateFailed': 'שכפול הלוח נכשל',
+
+  'boards.create.title': 'צור לוח חדש',
+  'boards.create.description': 'צור לוח תצוגה חדש עבור הארגון שלך',
+  'boards.create.boardName': 'שם הלוח',
+  'boards.create.boardNamePlaceholder': 'תצוגת לובי',
+  'boards.create.boardDescription': 'תיאור (אופציונלי)',
+  'boards.create.boardDescriptionPlaceholder': 'לוח מידע ראשי בכניסה',
+  'boards.create.createButton': 'צור לוח',
+  'boards.create.creating': 'יוצר...',
+  'boards.create.failed': 'יצירת הלוח נכשלה',
+};
+
+export default he;
