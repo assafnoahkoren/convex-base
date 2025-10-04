@@ -14,7 +14,7 @@ export default function Landing() {
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <header className="container mx-auto px-4 py-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Signo</h1>
+          <h1 className="text-2xl font-bold">signobee</h1>
           <div className="flex gap-4 items-center">
             {isAuthenticated && currentUser ? (
               <>
