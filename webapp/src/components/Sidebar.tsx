@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, Home, LogOut, LayoutGrid } from 'lucide-react';
+import { Menu, Home, LogOut, LayoutGrid, Monitor } from 'lucide-react';
 import { useAuthActions } from '@convex-dev/auth/react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -55,6 +55,17 @@ export function SidebarMenu() {
           >
             <LayoutGrid className="mr-2 h-4 w-4" />
             {t('navigation.boards')}
+          </Button>
+          <Button
+            variant="ghost"
+            className="justify-start"
+            onClick={() => {
+              navigate('/displays');
+              setOpen(false);
+            }}
+          >
+            <Monitor className="mr-2 h-4 w-4" />
+            Displays
           </Button>
           <div className="flex items-center justify-start px-2 py-1">
             <SwitchLocaleButton />

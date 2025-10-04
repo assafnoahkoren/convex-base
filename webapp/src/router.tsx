@@ -8,6 +8,8 @@ import BoardsList from './pages/Boards/BoardsList';
 import BoardViewer from './pages/Boards/BoardViewer';
 import BoardEditor from './pages/Boards/BoardEditor';
 import BoardHistory from './pages/Boards/BoardHistory';
+import DisplaysList from './pages/Displays/DisplaysList';
+import DisplayEditor from './pages/Displays/DisplayEditor';
 
 export function Router() {
   return (
@@ -57,6 +59,26 @@ export function Router() {
             <ProtectedRoute>
               <Shell>
                 <BoardHistory />
+              </Shell>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/displays"
+          element={
+            <ProtectedRoute>
+              <Shell>
+                <DisplaysList />
+              </Shell>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/displays/:displayId"
+          element={
+            <ProtectedRoute>
+              <Shell>
+                <DisplayEditor />
               </Shell>
             </ProtectedRoute>
           }
