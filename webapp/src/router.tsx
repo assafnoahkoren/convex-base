@@ -11,6 +11,8 @@ import BoardEditor from './pages/Boards/BoardEditor';
 import BoardHistory from './pages/Boards/BoardHistory';
 import DisplaysList from './pages/Displays/DisplaysList';
 import DisplayEditor from './pages/Displays/DisplayEditor';
+import SetupDisplay from './pages/SetupDisplay';
+import DisplayViewer from './pages/DisplayViewer';
 
 export function Router() {
   return (
@@ -84,6 +86,14 @@ export function Router() {
               </Shell>
             </ProtectedRoute>
           }
+        />
+        <Route
+          path="/setup-display/:pairingId"
+          element={<SetupDisplay />}
+        />
+        <Route
+          path="/display/:displayId"
+          element={<DisplayViewer />}
         />
       </Routes>
     </BrowserRouter>

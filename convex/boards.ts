@@ -32,32 +32,32 @@ export const list = query({
   },
 });
 
-// Get single board by ID
+// Get single board by ID (public access for display screens)
 export const get = query({
   args: { boardId: v.id("boards") },
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
-    if (!userId) {
-      throw new Error("Not authenticated");
-    }
 
     const board = await ctx.db.get(args.boardId);
     if (!board) {
-      throw new Error("Board not found");
+      return null;
     }
 
-    // Verify user has access to this board's organization
-    const membership = await ctx.db
-      .query("organizationMembers")
-      .withIndex("by_organization_and_user", (q) =>
-        q.eq("organizationId", board.organizationId).eq("userId", userId)
-      )
-      .first();
+    // If authenticated, verify user has access to this board's organization
+    if (userId) {
+      const membership = await ctx.db
+        .query("organizationMembers")
+        .withIndex("by_organization_and_user", (q) =>
+          q.eq("organizationId", board.organizationId).eq("userId", userId)
+        )
+        .first();
 
-    if (!membership) {
-      throw new Error("Access denied");
+      if (!membership) {
+        throw new Error("Access denied");
+      }
     }
 
+    // Allow unauthenticated access for public display screens
     return board;
   },
 });

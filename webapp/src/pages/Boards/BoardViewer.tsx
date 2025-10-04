@@ -5,10 +5,15 @@ import type { Id } from '@convex/_generated/dataModel';
 import { useTranslation } from 'react-i18next';
 import { getComponent } from '@/components/board-components/index.tsx';
 
-export default function BoardViewer() {
+interface BoardViewerProps {
+  boardIdOverride?: Id<'boards'>;
+}
+
+export default function BoardViewer({ boardIdOverride }: BoardViewerProps = {}) {
   const { t } = useTranslation();
-  const { boardId } = useParams<{ boardId: string }>();
-  const board = useQuery(api.boards.get, { boardId: boardId as Id<'boards'> });
+  const { boardId: routeBoardId } = useParams<{ boardId: string }>();
+  const boardId = boardIdOverride || (routeBoardId as Id<'boards'>);
+  const board = useQuery(api.boards.get, boardId ? { boardId } : "skip");
 
   if (board === undefined) {
     return (

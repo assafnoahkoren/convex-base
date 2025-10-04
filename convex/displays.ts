@@ -24,26 +24,12 @@ export const list = query({
   },
 });
 
-// Get a single display
+// Get a single display (public access for display screens)
 export const get = query({
   args: { displayId: v.id("displays") },
   handler: async (ctx, { displayId }) => {
-    const userId = await getAuthUserId(ctx);
-    if (!userId) throw new Error("Not authenticated");
-
     const display = await ctx.db.get(displayId);
-    if (!display) return null;
-
-    const membership = await ctx.db
-      .query("organizationMembers")
-      .withIndex("by_user", (q) => q.eq("userId", userId))
-      .first();
-
-    if (!membership || membership.organizationId !== display.organizationId) {
-      throw new Error("Unauthorized");
-    }
-
-    return display;
+    return display || null;
   },
 });
 
