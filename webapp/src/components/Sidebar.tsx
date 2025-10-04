@@ -38,7 +38,7 @@ export function SidebarMenu() {
             variant="ghost"
             className="justify-start"
             onClick={() => {
-              navigate('/');
+              navigate('/home');
               setOpen(false);
             }}
           >
