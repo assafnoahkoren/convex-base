@@ -4,6 +4,7 @@ import { useConvexAuth } from 'convex/react';
 import { useQuery } from 'convex/react';
 import { api } from '@convex/_generated/api';
 import { Monitor, Zap, Users, ArrowRight } from 'lucide-react';
+import { AnimatedGridPattern } from '@/components/ui/animated-grid-pattern';
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <header className="border-b border-gray-100">
+      <header className="border-b border-gray-100 relative z-10">
         <div className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
@@ -43,8 +44,17 @@ export default function Landing() {
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-6 py-24 md:py-32">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative overflow-hidden py-24 md:py-32">
+        <AnimatedGridPattern
+          className="absolute inset-0 z-0 stroke-orange-200/50 text-orange-400/40 [mask-image:radial-gradient(600px_circle_at_center,white,transparent)] skew-y-12"
+          width={60}
+          height={60}
+          numSquares={30}
+          maxOpacity={0.4}
+          duration={3}
+        />
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-50 text-[#fba40a] rounded-full text-sm font-medium mb-8">
             <Zap className="h-4 w-4" />
             Digital Signage Made Simple
@@ -81,79 +91,9 @@ export default function Landing() {
             </Button>
           </div>
         </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="container mx-auto px-6 py-20 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Everything You Need for Digital Signage
-            </h2>
-            <p className="text-lg text-gray-600">
-              Simple, powerful tools to manage your office displays
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <div className="h-12 w-12 bg-orange-50 rounded-lg flex items-center justify-center mb-6">
-                <Monitor className="h-6 w-6 text-[#fba40a]" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                Multi-Display Management
-              </h3>
-              <p className="text-gray-600">
-                Control multiple screens across your organization from a single dashboard. Update content in real-time.
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <div className="h-12 w-12 bg-orange-50 rounded-lg flex items-center justify-center mb-6">
-                <Zap className="h-6 w-6 text-[#fba40a]" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                Real-Time Updates
-              </h3>
-              <p className="text-gray-600">
-                Changes appear instantly on all connected displays. No delays, no manual refreshes required.
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <div className="h-12 w-12 bg-orange-50 rounded-lg flex items-center justify-center mb-6">
-                <Users className="h-6 w-6 text-[#fba40a]" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                Team Collaboration
-              </h3>
-              <p className="text-gray-600">
-                Role-based permissions let your team contribute while maintaining control over what gets published.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="container mx-auto px-6 py-24">
-        <div className="max-w-4xl mx-auto bg-gradient-to-r from-[#fba40a] to-orange-500 rounded-3xl p-12 md:p-16 text-center text-white">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Ready to Get Started?
-          </h2>
-          <p className="text-xl text-orange-50 mb-8 max-w-2xl mx-auto">
-            Join teams already using Signobee to power their office displays.
-          </p>
-          <Button
-            size="lg"
-            onClick={() => navigate('/register')}
-            className="bg-white text-[#fba40a] hover:bg-gray-50 px-8 text-lg h-14"
-          >
-            Create Your Account
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-        </div>
-      </section>
 
       {/* Footer */}
       <footer className="border-t border-gray-100 py-8">
