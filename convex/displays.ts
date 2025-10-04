@@ -38,8 +38,9 @@ export const create = mutation({
   args: {
     name: v.string(),
     location: v.optional(v.string()),
+    currentBoardId: v.optional(v.id("boards")),
   },
-  handler: async (ctx, { name, location }) => {
+  handler: async (ctx, { name, location, currentBoardId }) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) throw new Error("Not authenticated");
 
@@ -54,6 +55,7 @@ export const create = mutation({
       organizationId: membership.organizationId,
       name,
       location,
+      currentBoardId,
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
