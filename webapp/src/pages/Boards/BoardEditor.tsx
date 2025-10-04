@@ -402,7 +402,7 @@ export default function BoardEditor() {
             }}
           >
             {/* Draw grid cells accounting for gaps */}
-            {Array.from({ length: gridConfig.rows }).map((_, rowIndex) =>
+            {Array.from({ length: gridConfig.rows + 2 }).map((_, rowIndex) =>
               Array.from({ length: gridConfig.columns }).map((_, colIndex) => (
                 <div
                   key={`${rowIndex}-${colIndex}`}
@@ -486,7 +486,7 @@ export default function BoardEditor() {
                     <div className="absolute inset-0 bg-blue-500/20 pointer-events-none z-[100]" />
                   )}
                   {/* Drag Handle */}
-                  <div className="cursor-move absolute top-0 left-1/2 -translate-x-1/2 w-10 h-6 bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10 rounded-b-md drag-handle">
+                  <div className="cursor-move absolute top-0 left-1/2 -translate-x-1/2 w-10 h-4 bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10 rounded-b-md drag-handle">
                     <GripHorizontal className="h-4 w-4 text-gray-400" />
                   </div>
                   {/* Remove Button */}
